@@ -1,11 +1,11 @@
 import { AGENT_LABELS } from "../constants/agents.js";
 
 // Map evidence.source from the backend to the badge shown on the agent card.
-// Provider tags are emitted by backend/model_provider.py:provider_source_tag().
+// LLM provider sources (llm_bedrock / llm_azure_foundry) intentionally do NOT
+// render a badge — provider info is surfaced via the demo narrative, not UI
+// chrome. Only the FALLBACK badge is shown because it signals a real error.
 const SOURCE_BADGES = {
-  llm_bedrock:           { label: "Claude · Bedrock", cls: "src-llm src-bedrock" },
-  llm_azure_foundry:     { label: "Claude · Azure",   cls: "src-llm src-azure" },
-  deterministic_fallback:{ label: "FALLBACK",         cls: "src-fallback" },
+  deterministic_fallback: { label: "FALLBACK", cls: "src-fallback" },
 };
 
 const PROVIDER_LABELS = {
