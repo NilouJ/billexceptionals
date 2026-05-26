@@ -26,11 +26,11 @@ case_intake_triage
 
 | Node | What it does | Decision codes |
 |---|---|---|
-| `case_intake_triage` | Fetches account; checks status, supply, complaints, holds | `EXCLUDE_TO_ONSHORE` / `PROCEED` |
-| `precheck` | Fetches metering; checks deceased, life-support, hardship, comm failure | `BLOCK_TO_ONSHORE` / `PROCEED` |
-| `groundrule` | Fetches agreement + service orders; validates billing period coverage | `UNWORKABLE_TO_ONSHORE` / `WORKABLE` |
+| `case_intake_triage` | Fetches account; checks status, supply, complaints, holds | `RETURN_TO_ONSHORE_EXCLUDED` / `PROCEED` |
+| `precheck` | Fetches metering; checks deceased, life-support, hardship, comm failure | `RETURN_TO_ONSHORE_BLOCKED` / `PROCEED` |
+| `groundrule` | Fetches agreement + service orders; validates billing period coverage | `RETURN_TO_ONSHORE_UNWORKABLE` / `WORKABLE` |
 | `sop_context` | Retrieves SOP rules for the exception type | `CONTEXT_ASSEMBLED` / `SOP_GAP` |
-| `screening_outcome` | Synthesises the trace into a final recommendation | One of: `EXCLUDE_TO_ONSHORE`, `BLOCK_TO_ONSHORE`, `UNWORKABLE_TO_ONSHORE`, `NEEDS_MORE_DATA`, `WORKABLE` |
+| `screening_outcome` | Synthesises the trace into a final recommendation | One of: `RETURN_TO_ONSHORE_EXCLUDED`, `RETURN_TO_ONSHORE_BLOCKED`, `RETURN_TO_ONSHORE_UNWORKABLE`, `RETURN_TO_ONSHORE_NEEDS_SOP`, `WORKABLE` |
 
 ## Skip behaviour lives in edges, not agents
 

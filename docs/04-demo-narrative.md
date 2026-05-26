@@ -15,7 +15,7 @@ The judges already know the pain (51k cases, 30 FTEs). They don't need re-educat
 - [ ] Browser window pre-positioned, zoomed to ~110%, dark sidebar visible
 - [ ] Three demo cases pre-identified and verified:
   - [ ] **Case A** — clean WORKABLE path (all four agents PROCEED, LLM returns WORKABLE)
-  - [ ] **Case B** — EXCLUDE_TO_ONSHORE at triage (Ombudsman complaint OR pinned hold)
+  - [ ] **Case B** — RETURN_TO_ONSHORE_EXCLUDED at triage (Ombudsman complaint OR pinned hold)
   - [ ] **Case C** — UNWORKABLE at ground-rule (expired agreement OR active MOVE_OUT)
 - [ ] Batch endpoint working: pre-run once to warm any caches
 - [ ] HITL screen pre-loaded with a few cases in "pending approval" state
@@ -44,7 +44,7 @@ Switch to the running UI. Sidebar shows the case list. Pick **Case B** (a clear 
 
 Hit **Run Screening**. The five agent cards animate left to right:
 
-1. **Triage** — turns red, decision `EXCLUDE_TO_ONSHORE`, badge shows `R01-05` (Ombudsman) or `R01-06` (pinned hold).
+1. **Triage** — turns red, decision `RETURN_TO_ONSHORE_EXCLUDED`, badge shows `R01-05` (Ombudsman) or `R01-06` (pinned hold).
 2. **Pre-check, Ground-rule, SOP Context** — SKIP. They literally don't run because the graph's conditional edges route straight to outcome.
 3. **Screening Outcome** — turns green, badge shows **"Claude · Azure"** (or **Bedrock** if you've switched). Rationale appears in the right panel.
 

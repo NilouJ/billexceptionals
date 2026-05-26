@@ -109,7 +109,7 @@ def case_intake_triage_agent(state):
         })
 
     if rule_hits:
-        _trace(state, "case_intake_triage", "EXCLUDE_TO_ONSHORE", rule_hits=rule_hits, evidence=evidence)
+        _trace(state, "case_intake_triage", "RETURN_TO_ONSHORE_EXCLUDED", rule_hits=rule_hits, evidence=evidence)
         state["context"]["triage_excluded"] = True
     else:
         _trace(state, "case_intake_triage", "PROCEED", reasons=["All triage checks passed."], evidence=evidence)
@@ -182,7 +182,7 @@ def precheck_agent(state):
         })
 
     if rule_hits:
-        _trace(state, "precheck", "BLOCK_TO_ONSHORE", rule_hits=rule_hits, evidence=evidence)
+        _trace(state, "precheck", "RETURN_TO_ONSHORE_BLOCKED", rule_hits=rule_hits, evidence=evidence)
         state["context"]["precheck_blocked"] = True
     else:
         _trace(state, "precheck", "PROCEED", reasons=["All pre-check validations passed."], evidence=evidence)
@@ -263,7 +263,7 @@ def groundrule_agent(state):
         })
 
     if rule_hits:
-        _trace(state, "groundrule", "UNWORKABLE_TO_ONSHORE", rule_hits=rule_hits, evidence=evidence)
+        _trace(state, "groundrule", "RETURN_TO_ONSHORE_UNWORKABLE", rule_hits=rule_hits, evidence=evidence)
         state["context"]["groundrule_unworkable"] = True
     else:
         _trace(state, "groundrule", "WORKABLE", reasons=["Case is workable — agreement and meter valid."], evidence=evidence)
@@ -329,19 +329,19 @@ def case_screening_outcome_agent(state):
             all_reasons.extend(t.get("reasons", []))
 
     if context.get("triage_excluded"):
-        recommendation = "EXCLUDE_TO_ONSHORE"
+        recommendation = "RETURN_TO_ONSHORE_EXCLUDED"
         summary = f"Case {case_id} excluded at triage — route to onshore team for manual handling."
 
     elif context.get("precheck_blocked"):
-        recommendation = "BLOCK_TO_ONSHORE"
+        recommendation = "RETURN_TO_ONSHORE_BLOCKED"
         summary = f"Case {case_id} blocked at pre-check — route to onshore for specialist review."
 
     elif context.get("groundrule_unworkable"):
-        recommendation = "UNWORKABLE_TO_ONSHORE"
+        recommendation = "RETURN_TO_ONSHORE_UNWORKABLE"
         summary = f"Case {case_id} is unworkable — route to onshore for agreement or meter resolution."
 
     elif context.get("sop_gap"):
-        recommendation = "NEEDS_MORE_DATA"
+        recommendation = "RETURN_TO_ONSHORE_NEEDS_SOP"
         summary = f"Case {case_id} has no matching SOP — route to human for guidance."
 
     else:

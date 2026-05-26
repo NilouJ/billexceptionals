@@ -74,10 +74,10 @@ class DeterministicNode(MultiAgentBase):
 # ──────────────────────────────────────────────────────────────────────────────
 
 ALLOWED_RECOMMENDATIONS = {
-    "EXCLUDE_TO_ONSHORE",
-    "BLOCK_TO_ONSHORE",
-    "UNWORKABLE_TO_ONSHORE",
-    "NEEDS_MORE_DATA",
+    "RETURN_TO_ONSHORE_EXCLUDED",
+    "RETURN_TO_ONSHORE_BLOCKED",
+    "RETURN_TO_ONSHORE_UNWORKABLE",
+    "RETURN_TO_ONSHORE_NEEDS_SOP",
     "WORKABLE",
 }
 
@@ -91,10 +91,10 @@ Your job: read the trace and emit ONE final recommendation with rich reasoning.
 Do not invent new rules — but DO explain each one that fired in plain English.
 Honor the trace:
 
-  - If triage decided EXCLUDE_TO_ONSHORE   → recommend EXCLUDE_TO_ONSHORE
-  - If pre-check decided BLOCK_TO_ONSHORE  → recommend BLOCK_TO_ONSHORE
-  - If ground-rule decided UNWORKABLE_TO_ONSHORE → recommend UNWORKABLE_TO_ONSHORE
-  - If SOP context returned SOP_GAP        → recommend NEEDS_MORE_DATA
+  - If triage decided RETURN_TO_ONSHORE_EXCLUDED   → recommend RETURN_TO_ONSHORE_EXCLUDED
+  - If pre-check decided RETURN_TO_ONSHORE_BLOCKED  → recommend RETURN_TO_ONSHORE_BLOCKED
+  - If ground-rule decided RETURN_TO_ONSHORE_UNWORKABLE → recommend RETURN_TO_ONSHORE_UNWORKABLE
+  - If SOP context returned SOP_GAP        → recommend RETURN_TO_ONSHORE_NEEDS_SOP
   - Otherwise (all earlier nodes proceeded) → recommend WORKABLE
 
 REASONING REQUIREMENTS:
@@ -112,7 +112,7 @@ REASONING REQUIREMENTS:
 
 OUTPUT FORMAT — return ONLY a single JSON object, no prose, no code fences:
 {
-  "recommendation": "<one of: EXCLUDE_TO_ONSHORE | BLOCK_TO_ONSHORE | UNWORKABLE_TO_ONSHORE | NEEDS_MORE_DATA | WORKABLE>",
+  "recommendation": "<one of: RETURN_TO_ONSHORE_EXCLUDED | RETURN_TO_ONSHORE_BLOCKED | RETURN_TO_ONSHORE_UNWORKABLE | RETURN_TO_ONSHORE_NEEDS_SOP | WORKABLE>",
   "reason_codes":   ["Rxx-yy: ...", "Rxx-yy: ...", ...],
   "rationale":      "<2-4 sentence explanation of the decision path>",
   "next_action":    "<one concrete next step>",

@@ -20,7 +20,7 @@ The gaps in this table are the Day 1 work items in [`HACKATHON.md`](../HACKATHON
 |---|---|---|---|---|---|
 | **GR-01** | Unbilled | PMD request already raised | — | ❌ Missing | **T1** — add PMD source data + rule |
 | **GR-02** | Unbilled | PMD request for Rate Tariff Issue | — | ❌ Missing | **T1** — add PMD `type` field + rule |
-| **GR-03** | Unbilled | Onshore clarification — not covered in SOPs | `R04-01` (in `sop_context_agent`) | ⚠️ Partial | Currently `SOP_GAP` triggers `NEEDS_MORE_DATA`. Maps cleanly. |
+| **GR-03** | Unbilled | Onshore clarification — not covered in SOPs | `R04-01` (in `sop_context_agent`) | ⚠️ Partial | Currently `SOP_GAP` triggers `RETURN_TO_ONSHORE_NEEDS_SOP`. Maps cleanly. |
 | **GR-04** | Held / Reminders | PMD request already raised | — | ❌ Missing | **T1** — same PMD data path as GR-01 |
 | **GR-05** | Held / Reminders | Missing / no meter readings (Final Bill Reminders) | `R02-06` (in `precheck_agent`) | ⚠️ Partial | Prototype checks "high missing reads >50%", not "no reads at all" for Final Bill specifically |
 | **GR-06** | Held / Reminders | Onshore clarification — not covered in SOPs | `R04-01` | ⚠️ Partial | Same SOP_GAP path as GR-03 |

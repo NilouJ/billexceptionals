@@ -3,7 +3,7 @@ graph_topology.py — the Strands graph map.
 
 This is the file that turns "5 functions in a list" into a real directed graph
 with conditional edges. Skip logic lives in the EDGE CONDITIONS, not inside the
-agents. If triage decides EXCLUDE_TO_ONSHORE, the graph jumps straight to the
+agents. If triage decides RETURN_TO_ONSHORE_EXCLUDED, the graph jumps straight to the
 outcome node — precheck / groundrule / sop_context literally do not run.
 
 Topology:

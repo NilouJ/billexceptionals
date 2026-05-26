@@ -67,9 +67,9 @@ async for event in graph.stream_async(task="screen_case", invocation_state={"sta
 
 The 5 nodes (declared in order in `backend/schemas.py:AGENT_ORDER`):
 
-1. **`case_intake_triage`** — fetches account, checks status/supply/complaints/holds → `EXCLUDE_TO_ONSHORE` or `PROCEED`
-2. **`precheck`** — fetches metering, checks deceased/life-support/hardship/comm-failure → `BLOCK_TO_ONSHORE` or `PROCEED`
-3. **`groundrule`** — fetches agreement + service orders, validates billing period coverage → `UNWORKABLE_TO_ONSHORE` or `WORKABLE`
+1. **`case_intake_triage`** — fetches account, checks status/supply/complaints/holds → `RETURN_TO_ONSHORE_EXCLUDED` or `PROCEED`
+2. **`precheck`** — fetches metering, checks deceased/life-support/hardship/comm-failure → `RETURN_TO_ONSHORE_BLOCKED` or `PROCEED`
+3. **`groundrule`** — fetches agreement + service orders, validates billing period coverage → `RETURN_TO_ONSHORE_UNWORKABLE` or `WORKABLE`
 4. **`sop_context`** — retrieves SOP rules for the exception type → `CONTEXT_ASSEMBLED` or `SOP_GAP`
 5. **`screening_outcome`** — aggregates trace into final recommendation, writes `state["result"]`. Either deterministic Python OR a real Strands LLM agent (Bedrock or Azure AI Foundry) — see `model_provider.py`.
 
