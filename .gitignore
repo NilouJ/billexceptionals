@@ -1,0 +1,27 @@
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# PyCharm
+.idea/
+*.iml
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+
+# Env files — never commit real secrets, but DO commit the .example templates
+.env
+.env.local
+.env.bedrock
+.env.azure
+!.env.*.example
+
+# IDE / OS
+.vscode/
+*.swp

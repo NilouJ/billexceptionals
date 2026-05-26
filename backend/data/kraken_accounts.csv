@@ -1,0 +1,101 @@
+account_number,id,status,isOnSupply,isShellAccount,isInHardship,balance,overdueBalance,meterPointStatus,billingEmail,billingName,commsDeliveryPreference,createdAt,billingAddressLine1,billingCity,billingPostcode,brand,preferredLanguageForComms
+A-10000000,66925500,ACTIVE,True,False,False,67757,77236,ON_SUPPLY,joseph.johnson239@gmail.com,Joseph Johnson,POST,2025-03-08,6973 Cedar Dr,Houston,77001,ORIGIN,en
+A-10000001,43220503,ACTIVE,True,False,False,-29344,72357,ON_SUPPLY,james.carter271@gmail.com,James Carter,POST,2024-09-07,2145 River Rd,Houston,77002,ORIGIN,es
+A-10000002,30820038,ACTIVE,True,False,False,119878,9358,ON_SUPPLY,christine.parker465@outlook.com,Christine Parker,POST,2025-05-01,3532 Elm Ln,Houston,77019,ORIGIN,en
+A-10000003,25145751,ACTIVE,True,False,False,98682,41245,ON_SUPPLY,nancy.wright235@gmail.com,Nancy Wright,EMAIL,2025-05-30,1184 Cedar Dr,Dallas,75201,ORIGIN,es
+A-10000004,92533595,ACTIVE,True,False,False,114481,20969,ON_SUPPLY,anna.sanchez142@icloud.com,Anna Sanchez,EMAIL,2025-06-20,1896 Pine Blvd,Dallas,75202,ORIGIN,en
+A-10000005,37659807,ACTIVE,True,False,False,63971,20730,ON_SUPPLY,jacob.hill769@outlook.com,Jacob Hill,EMAIL,2024-10-15,1927 Elm Ln,Austin,78701,ORIGIN,en
+A-10000006,89717834,ACTIVE,True,False,False,34975,64042,ON_SUPPLY,james.campbell781@yahoo.com,James Campbell,EMAIL,2024-06-19,109 Hill Rd,Austin,78702,ORIGIN,es
+A-10000007,90233330,ACTIVE,True,False,False,60923,27760,ON_SUPPLY,joseph.white132@icloud.com,Joseph White,EMAIL,2025-03-13,8745 Hill Rd,San Antonio,78201,ORIGIN,en
+A-10000008,15937353,ACTIVE,True,False,False,10015,8834,ON_SUPPLY,sandra.rivera568@yahoo.com,Sandra Rivera,POST,2024-10-01,1263 Oak St,Fort Worth,76101,ORIGIN,es
+A-10000009,41452485,ACTIVE,True,False,False,61038,53883,ON_SUPPLY,ronald.jones827@icloud.com,Ronald Jones,EMAIL,2025-03-15,7162 Main St,El Paso,79901,ORIGIN,en
+A-10000010,28808678,ACTIVE,True,False,False,-46132,12224,ON_SUPPLY,michael.baker474@yahoo.com,Michael Baker,POST,2025-09-12,928 Park Ave,Arlington,76010,ORIGIN,en
+A-10000011,87324220,ACTIVE,True,False,False,27780,28534,ON_SUPPLY,nancy.clark293@icloud.com,Nancy Clark,POST,2024-07-09,2636 Cedar Dr,Corpus Christi,78401,ORIGIN,es
+A-10000012,41796721,ACTIVE,True,False,False,-18573,74668,ON_SUPPLY,benjamin.mitchell872@yahoo.com,Benjamin Mitchell,POST,2025-09-12,3953 River Rd,Plano,75023,ORIGIN,en
+A-10000013,98612211,ACTIVE,True,False,False,112833,73792,ON_SUPPLY,benjamin.hill135@outlook.com,Benjamin Hill,EMAIL,2025-08-22,252 Lake Dr,Lubbock,79401,ORIGIN,es
+A-10000014,50332555,ACTIVE,True,False,False,19328,15129,ON_SUPPLY,barbara.wright627@gmail.com,Barbara Wright,POST,2024-06-13,1797 Pine Blvd,Houston,77001,ORIGIN,en
+A-10000015,84721440,ACTIVE,True,False,False,117015,34335,ON_SUPPLY,scott.martinez95@icloud.com,Scott Martinez,EMAIL,2025-01-29,5564 Pine Blvd,Houston,77002,ORIGIN,es
+A-10000016,84605013,ACTIVE,True,False,False,15412,13473,ON_SUPPLY,gary.scott131@gmail.com,Gary Scott,POST,2025-11-04,5962 Cedar Dr,Houston,77019,ORIGIN,en
+A-10000017,56226575,ACTIVE,True,False,False,73388,29154,ON_SUPPLY,ryan.flores822@yahoo.com,Ryan Flores,POST,2025-03-16,6367 Oak St,Dallas,75201,ORIGIN,es
+A-10000018,65878146,ACTIVE,True,False,False,19590,5014,ON_SUPPLY,nicholas.thompson410@outlook.com,Nicholas Thompson,POST,2025-03-25,3025 Hill Rd,Dallas,75202,ORIGIN,en
+A-10000019,50250352,ACTIVE,True,False,False,32291,16334,ON_SUPPLY,samuel.ramirez948@yahoo.com,Samuel Ramirez,POST,2024-12-27,5509 Hill Rd,Austin,78701,ORIGIN,en
+A-10000020,82199509,ACTIVE,True,False,False,5098,56346,ON_SUPPLY,edward.allen631@outlook.com,Edward Allen,POST,2024-09-21,5078 Elm Ln,Austin,78702,ORIGIN,en
+A-10000021,40245233,ACTIVE,True,False,False,2200,19313,ON_SUPPLY,katherine.adams528@outlook.com,Katherine Adams,POST,2024-07-25,5185 Cedar Dr,San Antonio,78201,ORIGIN,en
+A-10000022,72146184,ACTIVE,True,False,False,71778,6582,ON_SUPPLY,jennifer.thomas915@gmail.com,Jennifer Thomas,EMAIL,2025-08-31,2981 Park Ave,Fort Worth,76101,ORIGIN,es
+A-10000023,65902739,ACTIVE,True,False,False,14812,36347,ON_SUPPLY,dorothy.diaz437@icloud.com,Dorothy Diaz,EMAIL,2024-08-03,7473 Elm Ln,El Paso,79901,ORIGIN,es
+A-10000024,42595918,ACTIVE,True,False,False,36738,71121,ON_SUPPLY,jonathan.green711@yahoo.com,Jonathan Green,POST,2025-02-05,6897 River Rd,Arlington,76010,ORIGIN,en
+A-10000025,54327148,ACTIVE,True,False,False,77986,28760,ON_SUPPLY,cynthia.brown306@icloud.com,Cynthia Brown,EMAIL,2024-09-09,9983 Cedar Dr,Corpus Christi,78401,ORIGIN,es
+A-10000026,59805178,ACTIVE,True,False,False,-14428,60515,ON_SUPPLY,kathleen.young929@icloud.com,Kathleen Young,EMAIL,2024-10-11,1475 River Rd,Plano,75023,ORIGIN,en
+A-10000027,16917129,ACTIVE,True,False,False,-32013,5276,ON_SUPPLY,michael.taylor482@gmail.com,Michael Taylor,POST,2024-12-13,5833 Cedar Dr,Lubbock,79401,ORIGIN,es
+A-10000028,91197624,ACTIVE,True,False,False,-43269,40888,ON_SUPPLY,dorothy.gonzalez622@gmail.com,Dorothy Gonzalez,EMAIL,2025-06-10,1871 Hill Rd,Houston,77001,ORIGIN,en
+A-10000029,35254849,ACTIVE,True,False,False,82634,44725,ON_SUPPLY,jason.sanchez802@gmail.com,Jason Sanchez,EMAIL,2025-08-28,6171 Maple Ave,Houston,77002,ORIGIN,es
+A-10000030,38036618,ACTIVE,True,False,False,-27282,36559,ON_SUPPLY,cynthia.evans277@icloud.com,Cynthia Evans,POST,2025-07-28,5380 Cedar Dr,Houston,77019,ORIGIN,es
+A-10000031,12058055,ACTIVE,True,False,False,13270,53271,ON_SUPPLY,dorothy.carter719@outlook.com,Dorothy Carter,EMAIL,2024-10-21,3230 Maple Ave,Dallas,75201,ORIGIN,en
+A-10000032,25745913,ACTIVE,True,False,False,36714,46112,ON_SUPPLY,nicole.carter378@icloud.com,Nicole Carter,POST,2024-07-14,7071 Park Ave,Dallas,75202,ORIGIN,en
+A-10000033,91121400,ACTIVE,True,False,False,-2961,39618,ON_SUPPLY,nicholas.moore284@outlook.com,Nicholas Moore,EMAIL,2025-03-01,3827 Main St,Austin,78701,ORIGIN,es
+A-10000034,42122457,ACTIVE,True,False,False,16185,62616,ON_SUPPLY,justin.rodriguez292@icloud.com,Justin Rodriguez,POST,2025-09-28,3120 Oak St,Austin,78702,ORIGIN,es
+A-10000035,61091554,ACTIVE,True,False,False,68099,58028,ON_SUPPLY,david.sanchez783@icloud.com,David Sanchez,POST,2025-08-30,8661 River Rd,San Antonio,78201,ORIGIN,es
+A-10000036,51395738,ACTIVE,True,False,False,73184,38175,ON_SUPPLY,samantha.ramirez566@gmail.com,Samantha Ramirez,POST,2025-09-13,7481 Hill Rd,Fort Worth,76101,ORIGIN,es
+A-10000037,78829070,SUSPENDED,False,False,False,-34367,21747,OFF_SUPPLY,emily.jackson558@yahoo.com,Emily Jackson,POST,2024-08-06,2430 Maple Ave,El Paso,79901,ORIGIN,es
+A-10000038,23234972,ACTIVE,True,False,False,10011,75392,ON_SUPPLY,samuel.mitchell41@icloud.com,Samuel Mitchell,POST,2025-01-22,523 Maple Ave,Arlington,76010,ORIGIN,es
+A-10000039,37263310,ACTIVE,True,False,False,-22580,21079,ON_SUPPLY,robert.carter993@gmail.com,Robert Carter,POST,2025-10-03,5560 Main St,Corpus Christi,78401,ORIGIN,es
+A-10000040,65556767,ACTIVE,True,False,False,-827,67952,ON_SUPPLY,ryan.hall886@gmail.com,Ryan Hall,EMAIL,2025-01-22,6870 Oak St,Plano,75023,ORIGIN,en
+A-10000041,29585415,ACTIVE,True,False,False,94769,53476,ON_SUPPLY,christine.carter624@yahoo.com,Christine Carter,EMAIL,2024-08-18,9124 Oak St,Lubbock,79401,ORIGIN,es
+A-10000042,84264220,ACTIVE,True,False,False,107123,66616,ON_SUPPLY,donald.turner484@yahoo.com,Donald Turner,POST,2024-07-29,6384 Cedar Dr,Houston,77001,ORIGIN,es
+A-10000043,30456313,ACTIVE,True,False,False,37147,72340,ON_SUPPLY,karen.parker594@icloud.com,Karen Parker,EMAIL,2025-02-04,8035 Main St,Houston,77002,ORIGIN,es
+A-10000044,40872577,ACTIVE,True,False,False,37030,13154,ON_SUPPLY,jason.robinson396@yahoo.com,Jason Robinson,POST,2025-05-04,8329 Hill Rd,Houston,77019,ORIGIN,en
+A-10000045,77015110,ACTIVE,True,False,False,114311,63956,ON_SUPPLY,richard.king666@gmail.com,Richard King,POST,2025-10-29,6326 Main St,Dallas,75201,ORIGIN,es
+A-10000046,75581613,ACTIVE,True,False,False,-35289,38452,ON_SUPPLY,john.flores455@yahoo.com,John Flores,POST,2025-03-18,853 Main St,Dallas,75202,ORIGIN,es
+A-10000047,32579937,ACTIVE,True,False,False,-47537,60981,ON_SUPPLY,rebecca.ramirez510@yahoo.com,Rebecca Ramirez,POST,2025-03-08,7629 Elm Ln,Austin,78701,ORIGIN,en
+A-10000048,28784915,ACTIVE,True,False,False,100683,38780,ON_SUPPLY,emma.hernandez874@icloud.com,Emma Hernandez,POST,2024-08-18,9470 Main St,Austin,78702,ORIGIN,en
+A-10000049,82764376,ACTIVE,True,False,False,15700,17927,ON_SUPPLY,michelle.johnson795@yahoo.com,Michelle Johnson,EMAIL,2025-02-05,3215 Hill Rd,San Antonio,78201,ORIGIN,en
+A-10000050,19976458,ACTIVE,True,False,False,76313,38684,ON_SUPPLY,richard.green136@outlook.com,Richard Green,EMAIL,2025-01-01,2795 Elm Ln,Fort Worth,76101,ORIGIN,en
+A-10000051,65350347,ACTIVE,True,False,False,69219,48311,ON_SUPPLY,deborah.phillips375@gmail.com,Deborah Phillips,EMAIL,2024-07-22,8891 Maple Ave,El Paso,79901,ORIGIN,en
+A-10000052,19122502,ACTIVE,True,False,True,-38113,4877,ON_SUPPLY,kimberly.nguyen651@icloud.com,Kimberly Nguyen,EMAIL,2024-10-29,2011 Pine Blvd,Arlington,76010,ORIGIN,en
+A-10000053,39356057,ACTIVE,True,False,False,-41424,48566,ON_SUPPLY,anna.davis907@icloud.com,Anna Davis,POST,2025-03-18,6786 Elm Ln,Corpus Christi,78401,ORIGIN,es
+A-10000054,18113477,ACTIVE,True,False,False,-36742,43713,ON_SUPPLY,gary.lewis972@icloud.com,Gary Lewis,POST,2024-11-07,9883 Oak St,Plano,75023,ORIGIN,es
+A-10000055,12111482,SUSPENDED,False,False,False,-21184,3379,OFF_SUPPLY,thomas.gomez3@outlook.com,Thomas Gomez,EMAIL,2025-04-17,4206 Pine Blvd,Lubbock,79401,ORIGIN,es
+A-10000056,11590610,ACTIVE,True,False,False,29070,60036,ON_SUPPLY,mary.thompson526@gmail.com,Mary Thompson,EMAIL,2024-12-17,810 Park Ave,Houston,77001,ORIGIN,es
+A-10000057,81905550,ACTIVE,True,False,False,82527,79354,ON_SUPPLY,patricia.brown282@outlook.com,Patricia Brown,POST,2024-09-28,4931 Lake Dr,Houston,77002,ORIGIN,en
+A-10000058,77406294,ACTIVE,True,False,False,-27623,12219,ON_SUPPLY,richard.gomez682@outlook.com,Richard Gomez,POST,2025-04-07,1199 Maple Ave,Houston,77019,ORIGIN,en
+A-10000059,24363501,ACTIVE,True,False,False,101497,66507,ON_SUPPLY,richard.mitchell889@gmail.com,Richard Mitchell,EMAIL,2025-07-03,5861 Maple Ave,Dallas,75201,ORIGIN,en
+A-10000060,42342289,ACTIVE,True,False,False,21636,40499,ON_SUPPLY,lisa.nelson998@gmail.com,Lisa Nelson,EMAIL,2025-03-29,574 Pine Blvd,Dallas,75202,ORIGIN,es
+A-10000061,57572279,ACTIVE,True,False,False,106296,11135,ON_SUPPLY,anthony.smith465@outlook.com,Anthony Smith,POST,2025-06-20,5414 Hill Rd,Austin,78701,ORIGIN,es
+A-10000062,20605783,ACTIVE,True,False,False,53615,78554,ON_SUPPLY,christine.brown291@icloud.com,Christine Brown,POST,2025-02-08,844 Cedar Dr,Austin,78702,ORIGIN,es
+A-10000063,71605634,ACTIVE,True,False,False,-38911,57176,ON_SUPPLY,james.wilson721@yahoo.com,James Wilson,EMAIL,2025-04-11,1280 River Rd,San Antonio,78201,ORIGIN,en
+A-10000064,50261914,ACTIVE,True,False,False,104369,52487,ON_SUPPLY,nicholas.jones472@outlook.com,Nicholas Jones,EMAIL,2024-08-31,4086 River Rd,Fort Worth,76101,ORIGIN,en
+A-10000065,22549425,ACTIVE,True,False,False,-4519,78957,ON_SUPPLY,amanda.mitchell835@yahoo.com,Amanda Mitchell,POST,2025-04-01,4293 Cedar Dr,El Paso,79901,ORIGIN,es
+A-10000066,60622842,ACTIVE,True,False,False,22004,77518,ON_SUPPLY,barbara.lopez324@yahoo.com,Barbara Lopez,POST,2024-07-26,7345 Elm Ln,Arlington,76010,ORIGIN,en
+A-10000067,95462880,ACTIVE,True,False,False,-655,42143,ON_SUPPLY,stephanie.allen520@icloud.com,Stephanie Allen,EMAIL,2024-12-31,7468 Hill Rd,Corpus Christi,78401,ORIGIN,en
+A-10000068,21097943,ACTIVE,True,False,False,38700,78366,ON_SUPPLY,eric.allen450@yahoo.com,Eric Allen,POST,2025-09-11,6447 River Rd,Plano,75023,ORIGIN,es
+A-10000069,96557984,ACTIVE,True,False,False,-27792,40577,ON_SUPPLY,ronald.jones597@yahoo.com,Ronald Jones,POST,2025-08-09,2212 Hill Rd,Lubbock,79401,ORIGIN,en
+A-10000070,80888325,ACTIVE,True,False,False,333,29693,ON_SUPPLY,jason.adams19@outlook.com,Jason Adams,EMAIL,2025-07-06,5698 Lake Dr,Houston,77001,ORIGIN,en
+A-10000071,38375916,ACTIVE,True,False,False,57704,47749,ON_SUPPLY,lisa.jones386@yahoo.com,Lisa Jones,POST,2025-08-02,7270 Oak St,Houston,77002,ORIGIN,es
+A-10000072,16249441,ACTIVE,True,False,False,88270,54874,ON_SUPPLY,steven.lewis377@icloud.com,Steven Lewis,EMAIL,2025-01-26,6356 Park Ave,Houston,77019,ORIGIN,es
+A-10000073,82884346,ACTIVE,True,False,False,-11374,57340,ON_SUPPLY,sandra.phillips292@gmail.com,Sandra Phillips,EMAIL,2025-06-25,7461 Park Ave,Dallas,75201,ORIGIN,en
+A-10000074,52209421,ACTIVE,True,False,False,-39960,37601,ON_SUPPLY,donald.evans954@gmail.com,Donald Evans,EMAIL,2024-11-21,2492 Pine Blvd,Dallas,75202,ORIGIN,en
+A-10000075,88790652,ACTIVE,True,False,True,60054,59914,ON_SUPPLY,karen.carter114@outlook.com,Karen Carter,EMAIL,2024-08-11,882 Cedar Dr,Austin,78701,ORIGIN,es
+A-10000076,20326375,ACTIVE,True,False,False,82992,66535,ON_SUPPLY,joseph.turner192@gmail.com,Joseph Turner,POST,2024-05-14,8718 Park Ave,Austin,78702,ORIGIN,en
+A-10000077,85693188,ACTIVE,True,False,False,118505,22949,ON_SUPPLY,robert.harris107@outlook.com,Robert Harris,EMAIL,2025-09-30,9045 Main St,San Antonio,78201,ORIGIN,es
+A-10000078,82553061,ACTIVE,True,False,False,-40401,25048,ON_SUPPLY,angela.hall324@outlook.com,Angela Hall,POST,2025-05-11,7856 Elm Ln,Fort Worth,76101,ORIGIN,es
+A-10000079,28783850,ACTIVE,True,False,False,-29310,56440,ON_SUPPLY,stephanie.parker509@icloud.com,Stephanie Parker,EMAIL,2024-12-09,1453 River Rd,El Paso,79901,ORIGIN,es
+A-10000080,17207013,ACTIVE,True,False,False,117120,53242,ON_SUPPLY,betty.wright44@outlook.com,Betty Wright,EMAIL,2024-12-20,1039 Maple Ave,Arlington,76010,ORIGIN,es
+A-10000081,41157840,ACTIVE,True,False,False,66376,10077,ON_SUPPLY,brenda.phillips973@gmail.com,Brenda Phillips,EMAIL,2025-10-13,6177 Main St,Corpus Christi,78401,ORIGIN,es
+A-10000082,91224373,ACTIVE,True,False,False,2475,16074,ON_SUPPLY,karen.king269@outlook.com,Karen King,POST,2024-10-02,4778 Lake Dr,Plano,75023,ORIGIN,es
+A-10000083,13976288,ACTIVE,True,False,False,8783,15907,ON_SUPPLY,barbara.lewis913@outlook.com,Barbara Lewis,POST,2024-08-15,6022 Park Ave,Lubbock,79401,ORIGIN,es
+A-10000084,75847681,ACTIVE,True,False,False,-17147,41553,ON_SUPPLY,karen.thomas735@icloud.com,Karen Thomas,EMAIL,2025-10-18,9519 Maple Ave,Houston,77001,ORIGIN,es
+A-10000085,84227466,ACTIVE,True,False,False,34583,29552,ON_SUPPLY,barbara.lewis852@gmail.com,Barbara Lewis,POST,2024-06-02,2797 Pine Blvd,Houston,77002,ORIGIN,es
+A-10000086,34929311,ACTIVE,True,False,False,-42563,10646,ON_SUPPLY,larry.jackson965@yahoo.com,Larry Jackson,POST,2025-03-02,9334 Oak St,Houston,77019,ORIGIN,en
+A-10000087,93029219,ACTIVE,True,False,False,58952,63471,ON_SUPPLY,helen.taylor305@icloud.com,Helen Taylor,POST,2024-09-13,2689 Lake Dr,Dallas,75201,ORIGIN,en
+A-10000088,19865900,ACTIVE,True,False,False,14990,18465,ON_SUPPLY,mark.perez109@outlook.com,Mark Perez,EMAIL,2025-06-19,4482 Lake Dr,Dallas,75202,ORIGIN,es
+A-10000089,30699187,ACTIVE,True,False,False,53086,66249,ON_SUPPLY,michael.jackson528@icloud.com,Michael Jackson,POST,2024-09-11,479 Maple Ave,Austin,78701,ORIGIN,en
+A-10000090,62294176,ACTIVE,True,False,False,-38140,52505,ON_SUPPLY,steven.wilson442@yahoo.com,Steven Wilson,POST,2024-11-17,6706 Main St,Austin,78702,ORIGIN,es
+A-10000091,24301022,ACTIVE,True,False,False,-12182,26090,ON_SUPPLY,brandon.scott132@gmail.com,Brandon Scott,EMAIL,2024-11-07,9239 Main St,San Antonio,78201,ORIGIN,en
+A-10000092,51374957,ACTIVE,True,False,False,82989,66809,ON_SUPPLY,brenda.sanchez954@outlook.com,Brenda Sanchez,POST,2025-10-03,9827 Main St,Fort Worth,76101,ORIGIN,es
+A-10000093,46207439,ACTIVE,True,False,False,75946,22349,ON_SUPPLY,jonathan.rivera28@icloud.com,Jonathan Rivera,EMAIL,2025-01-11,941 Hill Rd,El Paso,79901,ORIGIN,en
+A-10000094,21716836,ACTIVE,True,False,False,85969,27176,ON_SUPPLY,christine.roberts708@yahoo.com,Christine Roberts,EMAIL,2025-06-15,1120 Pine Blvd,Arlington,76010,ORIGIN,es
+A-10000095,70242778,ACTIVE,True,False,False,96299,39124,ON_SUPPLY,melissa.nelson823@outlook.com,Melissa Nelson,POST,2024-05-24,4138 Elm Ln,Corpus Christi,78401,ORIGIN,en
+A-10000096,13524813,ACTIVE,True,False,False,25400,10358,ON_SUPPLY,edward.roberts693@icloud.com,Edward Roberts,EMAIL,2025-04-15,4858 Oak St,Plano,75023,ORIGIN,es
+A-10000097,84386123,ACTIVE,True,False,False,-23734,54172,ON_SUPPLY,gary.adams249@gmail.com,Gary Adams,EMAIL,2024-07-11,3914 Oak St,Lubbock,79401,ORIGIN,es
+A-10000098,61705758,ACTIVE,True,False,False,90286,4888,ON_SUPPLY,eric.miller329@outlook.com,Eric Miller,EMAIL,2025-11-08,9506 Cedar Dr,Houston,77001,ORIGIN,es
+A-10000099,65540647,ACTIVE,True,False,False,79476,17589,ON_SUPPLY,cynthia.turner306@gmail.com,Cynthia Turner,POST,2025-10-07,9001 Park Ave,Houston,77002,ORIGIN,en

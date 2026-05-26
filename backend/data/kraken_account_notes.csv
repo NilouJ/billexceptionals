@@ -1,0 +1,84 @@
+id,account_number,body,isPinned,author,createdAt
+NOTE-701BE02E,A-10000000,Customer queries green tariff options,False,agent.742@origin.com.au,2026-04-18
+NOTE-4FE8B017,A-10000001,Address update processed,False,agent.623@origin.com.au,2026-02-04
+NOTE-E242E887,A-10000003,Customer queries green tariff options,False,agent.270@origin.com.au,2026-02-02
+NOTE-706D8C9E,A-10000005,Called customer re: high usage query - resolved,False,agent.687@origin.com.au,2025-11-16
+NOTE-D9F42A1D,A-10000006,Called customer re: high usage query - resolved,False,agent.333@origin.com.au,2025-12-28
+NOTE-BBA1B3D9,A-10000006,Called customer re: high usage query - resolved,False,agent.145@origin.com.au,2026-05-04
+NOTE-75ABB48A,A-10000007,DO NOT BILL - pending dispute resolution,True,agent.147@origin.com.au,2026-04-07
+NOTE-2D0D7E27,A-10000007,Address update processed,False,agent.253@origin.com.au,2026-03-23
+NOTE-00C2164A,A-10000009,Address update processed,False,agent.329@origin.com.au,2026-02-14
+NOTE-234B86C0,A-10000009,Payment arrangement discussed with customer,False,agent.526@origin.com.au,2026-02-15
+NOTE-182F8364,A-10000010,Called customer re: high usage query - resolved,False,agent.685@origin.com.au,2026-02-01
+NOTE-00A82985,A-10000012,Called customer re: high usage query - resolved,False,agent.283@origin.com.au,2026-03-11
+NOTE-295FCECC,A-10000012,Customer queries green tariff options,False,agent.147@origin.com.au,2026-01-25
+NOTE-D13F48DC,A-10000014,Meter access confirmed for next read,False,agent.892@origin.com.au,2026-02-17
+NOTE-3FD389A6,A-10000015,Called customer re: high usage query - resolved,False,agent.666@origin.com.au,2026-01-11
+NOTE-FBADCF71,A-10000017,Payment arrangement discussed with customer,False,agent.398@origin.com.au,2025-12-14
+NOTE-E3CE55B3,A-10000018,Customer queries green tariff options,False,agent.348@origin.com.au,2026-01-09
+NOTE-40FFE788,A-10000019,Customer queries green tariff options,False,agent.605@origin.com.au,2026-03-18
+NOTE-069DECD0,A-10000020,Customer queries green tariff options,False,agent.878@origin.com.au,2026-03-06
+NOTE-A0363802,A-10000020,Payment arrangement discussed with customer,False,agent.106@origin.com.au,2026-01-23
+NOTE-269B9DE3,A-10000023,Meter access confirmed for next read,False,agent.751@origin.com.au,2026-05-05
+NOTE-0881D605,A-10000023,Meter access confirmed for next read,False,agent.101@origin.com.au,2025-11-20
+NOTE-F7638569,A-10000024,Meter access confirmed for next read,False,agent.206@origin.com.au,2026-03-16
+NOTE-1F86A0FC,A-10000025,Payment arrangement discussed with customer,False,agent.529@origin.com.au,2026-01-02
+NOTE-867B17C6,A-10000025,Called customer re: high usage query - resolved,False,agent.245@origin.com.au,2026-02-25
+NOTE-2CB90B70,A-10000029,Address update processed,False,agent.817@origin.com.au,2026-02-01
+NOTE-2A33E4EF,A-10000029,Address update processed,False,agent.865@origin.com.au,2026-04-16
+NOTE-E6C1BE73,A-10000030,Called customer re: high usage query - resolved,False,agent.617@origin.com.au,2026-04-03
+NOTE-7D6C6761,A-10000030,Address update processed,False,agent.176@origin.com.au,2025-12-07
+NOTE-7467F484,A-10000031,Called customer re: high usage query - resolved,False,agent.545@origin.com.au,2025-11-19
+NOTE-58FD9ED6,A-10000031,Payment arrangement discussed with customer,False,agent.342@origin.com.au,2026-02-22
+NOTE-2DC6ABD8,A-10000032,Meter access confirmed for next read,False,agent.920@origin.com.au,2026-01-27
+NOTE-1345D74A,A-10000033,Meter access confirmed for next read,False,agent.425@origin.com.au,2026-01-12
+NOTE-DD9973BA,A-10000033,Meter access confirmed for next read,False,agent.339@origin.com.au,2026-04-18
+NOTE-83F96D57,A-10000036,Called customer re: high usage query - resolved,False,agent.259@origin.com.au,2026-04-10
+NOTE-D0BBFE51,A-10000036,Payment arrangement discussed with customer,False,agent.560@origin.com.au,2026-01-08
+NOTE-ABD67387,A-10000037,Address update processed,False,agent.223@origin.com.au,2025-12-21
+NOTE-CFFEA220,A-10000038,Payment arrangement discussed with customer,False,agent.562@origin.com.au,2026-02-18
+NOTE-DDD4B705,A-10000039,Meter access confirmed for next read,False,agent.972@origin.com.au,2026-04-07
+NOTE-43F219D0,A-10000042,Meter access confirmed for next read,False,agent.946@origin.com.au,2025-12-04
+NOTE-4CB3E4A4,A-10000042,Called customer re: high usage query - resolved,False,agent.320@origin.com.au,2026-02-13
+NOTE-7E515726,A-10000045,Payment arrangement discussed with customer,False,agent.464@origin.com.au,2026-01-26
+NOTE-93712334,A-10000045,Customer queries green tariff options,False,agent.150@origin.com.au,2025-11-15
+NOTE-8DA9AA25,A-10000046,Meter access confirmed for next read,False,agent.939@origin.com.au,2026-03-24
+NOTE-15688908,A-10000048,Address update processed,False,agent.669@origin.com.au,2025-12-18
+NOTE-B27F4B88,A-10000051,Called customer re: high usage query - resolved,False,agent.923@origin.com.au,2026-04-02
+NOTE-D27660FE,A-10000058,Meter access confirmed for next read,False,agent.802@origin.com.au,2025-11-27
+NOTE-74965351,A-10000059,Called customer re: high usage query - resolved,False,agent.696@origin.com.au,2025-12-08
+NOTE-03182A7E,A-10000059,Meter access confirmed for next read,False,agent.932@origin.com.au,2026-04-18
+NOTE-36D479BE,A-10000063,Address update processed,False,agent.928@origin.com.au,2026-04-05
+NOTE-C597AB57,A-10000063,Called customer re: high usage query - resolved,False,agent.967@origin.com.au,2026-02-12
+NOTE-36499D11,A-10000066,Called customer re: high usage query - resolved,False,agent.272@origin.com.au,2025-12-12
+NOTE-1D351F10,A-10000067,Address update processed,False,agent.608@origin.com.au,2026-04-30
+NOTE-B1D8BFAA,A-10000068,Address update processed,False,agent.276@origin.com.au,2026-02-06
+NOTE-5F8DE1A0,A-10000071,Meter access confirmed for next read,False,agent.556@origin.com.au,2026-03-30
+NOTE-3A14E237,A-10000073,Customer queries green tariff options,False,agent.731@origin.com.au,2026-03-06
+NOTE-541C4C7A,A-10000073,Meter access confirmed for next read,False,agent.610@origin.com.au,2026-01-22
+NOTE-3C9B6947,A-10000074,Address update processed,False,agent.162@origin.com.au,2026-04-15
+NOTE-26C18311,A-10000074,Meter access confirmed for next read,False,agent.492@origin.com.au,2026-04-02
+NOTE-A4AF5A73,A-10000075,Payment arrangement discussed with customer,False,agent.758@origin.com.au,2025-12-24
+NOTE-8CF9EC22,A-10000077,Customer queries green tariff options,False,agent.913@origin.com.au,2026-05-03
+NOTE-C9B99270,A-10000077,Address update processed,False,agent.900@origin.com.au,2026-02-05
+NOTE-75F67721,A-10000078,Customer queries green tariff options,False,agent.900@origin.com.au,2026-01-03
+NOTE-8F966219,A-10000079,Customer queries green tariff options,False,agent.614@origin.com.au,2026-02-14
+NOTE-D6ED0195,A-10000080,Meter access confirmed for next read,False,agent.284@origin.com.au,2026-05-01
+NOTE-7995BD28,A-10000081,Customer queries green tariff options,False,agent.324@origin.com.au,2026-04-30
+NOTE-0E7DC91E,A-10000082,Called customer re: high usage query - resolved,False,agent.928@origin.com.au,2026-01-07
+NOTE-25C465D8,A-10000083,Meter access confirmed for next read,False,agent.885@origin.com.au,2025-12-09
+NOTE-E492AF25,A-10000083,Payment arrangement discussed with customer,False,agent.263@origin.com.au,2026-04-12
+NOTE-9047DF27,A-10000085,Payment arrangement discussed with customer,False,agent.372@origin.com.au,2025-12-22
+NOTE-54F0E9F8,A-10000085,Called customer re: high usage query - resolved,False,agent.882@origin.com.au,2026-03-12
+NOTE-0A98A8B0,A-10000086,Address update processed,False,agent.463@origin.com.au,2026-03-24
+NOTE-D5737DEC,A-10000086,Payment arrangement discussed with customer,False,agent.342@origin.com.au,2025-12-07
+NOTE-7DF0EF4C,A-10000087,Meter access confirmed for next read,False,agent.705@origin.com.au,2026-04-30
+NOTE-D8E4C622,A-10000088,Meter access confirmed for next read,False,agent.681@origin.com.au,2025-12-14
+NOTE-CCDA9004,A-10000088,Payment arrangement discussed with customer,False,agent.676@origin.com.au,2026-03-20
+NOTE-7373A463,A-10000089,Customer queries green tariff options,False,agent.416@origin.com.au,2026-03-24
+NOTE-2D0397E9,A-10000090,Customer requested billing suspension,True,agent.138@origin.com.au,2026-05-02
+NOTE-A3557B3E,A-10000092,DO NOT BILL - pending dispute resolution,True,agent.120@origin.com.au,2026-04-04
+NOTE-4AAAC3B8,A-10000092,Called customer re: high usage query - resolved,False,agent.439@origin.com.au,2025-12-01
+NOTE-E7D35644,A-10000095,Payment arrangement discussed with customer,False,agent.921@origin.com.au,2026-02-14
+NOTE-46B39062,A-10000099,Payment arrangement discussed with customer,False,agent.892@origin.com.au,2026-04-09
+NOTE-187FCEC4,A-10000099,Customer queries green tariff options,False,agent.981@origin.com.au,2026-02-03

@@ -1,0 +1,390 @@
+{
+  "accounts": {
+    "A-10000001": {
+      "account_number": "A-10000001",
+      "status": "ACTIVE",
+      "isOnSupply": true,
+      "isShellAccount": false,
+      "isInHardship": false,
+      "balance": 45200,
+      "overdueBalance": 0,
+      "meterPointStatus": "ON_SUPPLY",
+      "billingName": "James Smith",
+      "billingEmail": "james.smith@gmail.com",
+      "commsDeliveryPreference": "EMAIL",
+      "complaints": [],
+      "notes": [],
+      "users": [
+        {
+          "id": "U-50000001",
+          "givenName": "James",
+          "familyName": "Smith",
+          "isDeceased": false,
+          "isInHardship": false,
+          "isActive": true,
+          "hasFamilyIssues": false,
+          "hasLifeSupport": false,
+          "hasSpecialCircumstances": false
+        }
+      ],
+      "activeHardshipAgreements": [],
+      "assistanceAgreements": []
+    },
+    "A-10000002": {
+      "account_number": "A-10000002",
+      "status": "ACTIVE",
+      "isOnSupply": true,
+      "isShellAccount": false,
+      "isInHardship": false,
+      "balance": 12800,
+      "overdueBalance": 3200,
+      "meterPointStatus": "ON_SUPPLY",
+      "billingName": "Mary Johnson",
+      "billingEmail": "mary.johnson@yahoo.com",
+      "commsDeliveryPreference": "EMAIL",
+      "complaints": [
+        {
+          "id": "COMP-001",
+          "type": "BILLING",
+          "subtype": "OMBUDSMAN",
+          "isOfficial": true,
+          "creationDate": "2026-02-10",
+          "resolutionDate": null
+        }
+      ],
+      "notes": [],
+      "users": [
+        {
+          "id": "U-50000002",
+          "givenName": "Mary",
+          "familyName": "Johnson",
+          "isDeceased": false,
+          "isInHardship": false,
+          "isActive": true,
+          "hasFamilyIssues": false,
+          "hasLifeSupport": false,
+          "hasSpecialCircumstances": false
+        }
+      ],
+      "activeHardshipAgreements": [],
+      "assistanceAgreements": []
+    },
+    "A-10000003": {
+      "account_number": "A-10000003",
+      "status": "ACTIVE",
+      "isOnSupply": true,
+      "isShellAccount": false,
+      "isInHardship": false,
+      "balance": 8900,
+      "overdueBalance": 0,
+      "meterPointStatus": "ON_SUPPLY",
+      "billingName": "Robert Williams",
+      "billingEmail": "robert.w@outlook.com",
+      "commsDeliveryPreference": "POST",
+      "complaints": [],
+      "notes": [
+        {
+          "id": "NOTE-001",
+          "body": "DO NOT BILL - pending dispute resolution with customer team",
+          "isPinned": true,
+          "author": "agent.442@origin.com.au",
+          "createdAt": "2026-04-01"
+        }
+      ],
+      "users": [
+        {
+          "id": "U-50000003",
+          "givenName": "Robert",
+          "familyName": "Williams",
+          "isDeceased": false,
+          "isInHardship": false,
+          "isActive": true,
+          "hasFamilyIssues": false,
+          "hasLifeSupport": false,
+          "hasSpecialCircumstances": false
+        }
+      ],
+      "activeHardshipAgreements": [],
+      "assistanceAgreements": []
+    },
+    "A-10000004": {
+      "account_number": "A-10000004",
+      "status": "ACTIVE",
+      "isOnSupply": true,
+      "isShellAccount": false,
+      "isInHardship": true,
+      "balance": -5000,
+      "overdueBalance": 18000,
+      "meterPointStatus": "ON_SUPPLY",
+      "billingName": "Patricia Brown",
+      "billingEmail": "pat.brown@gmail.com",
+      "commsDeliveryPreference": "EMAIL",
+      "complaints": [],
+      "notes": [],
+      "users": [
+        {
+          "id": "U-50000004",
+          "givenName": "Patricia",
+          "familyName": "Brown",
+          "isDeceased": false,
+          "isInHardship": true,
+          "isActive": true,
+          "hasFamilyIssues": false,
+          "hasLifeSupport": false,
+          "hasSpecialCircumstances": false
+        }
+      ],
+      "activeHardshipAgreements": [
+        {
+          "status": "ACTIVE",
+          "startDate": "2026-01-15",
+          "endDate": "2026-07-15"
+        }
+      ],
+      "assistanceAgreements": []
+    },
+    "A-10000005": {
+      "account_number": "A-10000005",
+      "status": "ACTIVE",
+      "isOnSupply": true,
+      "isShellAccount": false,
+      "isInHardship": false,
+      "balance": 67000,
+      "overdueBalance": 0,
+      "meterPointStatus": "ON_SUPPLY",
+      "billingName": "John Jones",
+      "billingEmail": "john.jones@icloud.com",
+      "commsDeliveryPreference": "EMAIL",
+      "complaints": [],
+      "notes": [],
+      "users": [
+        {
+          "id": "U-50000005",
+          "givenName": "John",
+          "familyName": "Jones",
+          "isDeceased": false,
+          "isInHardship": false,
+          "isActive": true,
+          "hasFamilyIssues": false,
+          "hasLifeSupport": true,
+          "hasSpecialCircumstances": true
+        }
+      ],
+      "activeHardshipAgreements": [],
+      "assistanceAgreements": []
+    }
+  },
+
+  "metering": {
+    "ESI-001": {
+      "esiid": "ESI-001",
+      "account_number": "A-10000001",
+      "meter_type": "AMI",
+      "meter_status": "ACTIVE",
+      "tdsp": "Oncor",
+      "load_zone": "LZ_NORTH",
+      "last_read_date": "2026-05-11",
+      "read_quality": "GOOD",
+      "daily_readings": [
+        {"date": "2026-03-28", "usage_kwh": 32.4, "source": "AMR"},
+        {"date": "2026-03-29", "usage_kwh": 28.1, "source": "AMR"},
+        {"date": "2026-03-30", "usage_kwh": 35.6, "source": "AMR"},
+        {"date": "2026-03-31", "usage_kwh": 31.2, "source": "AMR"},
+        {"date": "2026-04-01", "usage_kwh": 29.8, "source": "AMR"},
+        {"date": "2026-04-02", "usage_kwh": 33.5, "source": "AMR"},
+        {"date": "2026-04-03", "usage_kwh": 27.9, "source": "AMR"}
+      ],
+      "avg_daily_kwh": 31.2,
+      "consecutive_zero_days": 0,
+      "estimated_read_pct": 0.0
+    },
+    "ESI-002": {
+      "esiid": "ESI-002",
+      "account_number": "A-10000002",
+      "meter_type": "AMR",
+      "meter_status": "ACTIVE",
+      "tdsp": "AEP Texas",
+      "load_zone": "LZ_HOUSTON",
+      "last_read_date": "2026-04-20",
+      "read_quality": "GOOD",
+      "daily_readings": [
+        {"date": "2026-03-28", "usage_kwh": 41.2, "source": "AMR"},
+        {"date": "2026-03-29", "usage_kwh": 39.8, "source": "AMR"},
+        {"date": "2026-03-30", "usage_kwh": 44.1, "source": "AMR"}
+      ],
+      "avg_daily_kwh": 41.7,
+      "consecutive_zero_days": 0,
+      "estimated_read_pct": 0.0
+    },
+    "ESI-003": {
+      "esiid": "ESI-003",
+      "account_number": "A-10000003",
+      "meter_type": "AMI",
+      "meter_status": "ACTIVE",
+      "tdsp": "CenterPoint Energy",
+      "load_zone": "LZ_HOUSTON",
+      "last_read_date": "2026-05-10",
+      "read_quality": "GOOD",
+      "daily_readings": [
+        {"date": "2026-03-28", "usage_kwh": 22.1, "source": "AMR"},
+        {"date": "2026-03-29", "usage_kwh": 18.5, "source": "AMR"}
+      ],
+      "avg_daily_kwh": 20.3,
+      "consecutive_zero_days": 0,
+      "estimated_read_pct": 0.0
+    },
+    "ESI-004": {
+      "esiid": "ESI-004",
+      "account_number": "A-10000004",
+      "meter_type": "AMR",
+      "meter_status": "ACTIVE",
+      "tdsp": "Oncor",
+      "load_zone": "LZ_NORTH",
+      "last_read_date": "2026-05-01",
+      "read_quality": "GOOD",
+      "daily_readings": [
+        {"date": "2026-03-28", "usage_kwh": 15.2, "source": "AMR"},
+        {"date": "2026-03-29", "usage_kwh": 14.8, "source": "AMR"}
+      ],
+      "avg_daily_kwh": 15.0,
+      "consecutive_zero_days": 0,
+      "estimated_read_pct": 0.0
+    },
+    "ESI-005": {
+      "esiid": "ESI-005",
+      "account_number": "A-10000005",
+      "meter_type": "ANALOG",
+      "meter_status": "ACTIVE",
+      "tdsp": "Texas New Mexico Power",
+      "load_zone": "LZ_WEST",
+      "last_read_date": "2026-04-15",
+      "read_quality": "POOR",
+      "daily_readings": [
+        {"date": "2026-03-28", "usage_kwh": 0.0, "source": "MISSING"},
+        {"date": "2026-03-29", "usage_kwh": 0.0, "source": "MISSING"},
+        {"date": "2026-03-30", "usage_kwh": 0.0, "source": "MISSING"},
+        {"date": "2026-03-31", "usage_kwh": 0.0, "source": "MISSING"},
+        {"date": "2026-04-01", "usage_kwh": 0.0, "source": "MISSING"},
+        {"date": "2026-04-02", "usage_kwh": 0.0, "source": "MISSING"},
+        {"date": "2026-04-03", "usage_kwh": 0.0, "source": "MISSING"}
+      ],
+      "avg_daily_kwh": 0.0,
+      "consecutive_zero_days": 7,
+      "estimated_read_pct": 100.0
+    }
+  },
+
+  "agreements": {
+    "A-10000001": {
+      "id": "AG-60000001",
+      "product_code": "ORIGIN_FLAT_RATE_12M",
+      "product_display_name": "Origin Flat Rate 12M",
+      "tariff_type": "FIXED",
+      "rate_per_kwh": 0.112,
+      "valid_from": "2025-06-01",
+      "valid_to": "2026-06-01",
+      "terminated_at": null,
+      "status": "ACTIVE",
+      "is_eligible_for_renewal": true
+    },
+    "A-10000002": {
+      "id": "AG-60000002",
+      "product_code": "ORIGIN_GREEN_100",
+      "product_display_name": "Origin Green 100",
+      "tariff_type": "FIXED",
+      "rate_per_kwh": 0.121,
+      "valid_from": "2025-03-01",
+      "valid_to": "2026-03-01",
+      "terminated_at": null,
+      "status": "ACTIVE",
+      "is_eligible_for_renewal": true
+    },
+    "A-10000003": {
+      "id": "AG-60000003",
+      "product_code": "ORIGIN_TIERED_SUMMER",
+      "product_display_name": "Origin Tiered Summer",
+      "tariff_type": "TIERED",
+      "rate_per_kwh": 0.105,
+      "valid_from": "2025-09-01",
+      "valid_to": "2026-09-01",
+      "terminated_at": null,
+      "status": "ACTIVE",
+      "is_eligible_for_renewal": false
+    },
+    "A-10000004": {
+      "id": "AG-60000004",
+      "product_code": "ORIGIN_FLAT_RATE_12M",
+      "product_display_name": "Origin Flat Rate 12M",
+      "tariff_type": "FIXED",
+      "rate_per_kwh": 0.112,
+      "valid_from": "2025-04-01",
+      "valid_to": "2026-04-01",
+      "terminated_at": null,
+      "status": "ACTIVE",
+      "is_eligible_for_renewal": true
+    },
+    "A-10000005": {
+      "id": "AG-60000005",
+      "product_code": "ORIGIN_INDEXED_RT",
+      "product_display_name": "Origin Indexed RT",
+      "tariff_type": "INDEXED",
+      "rate_per_kwh": null,
+      "valid_from": "2025-01-01",
+      "valid_to": "2026-01-01",
+      "terminated_at": "2026-01-01",
+      "status": "EXPIRED",
+      "is_eligible_for_renewal": true
+    }
+  },
+
+  "service_orders": {
+    "A-10000001": [],
+    "A-10000002": [],
+    "A-10000003": [],
+    "A-10000004": [],
+    "A-10000005": [
+      {
+        "id": "SO-001",
+        "process_type": "LEAVE_SUPPLIER",
+        "status": "IN_PROGRESS",
+        "stage": "MOVE_OUT_REQUESTED",
+        "requested_date": "2026-04-20",
+        "completed_date": null
+      }
+    ]
+  },
+
+  "sops": {
+    "UNBILLED": [
+      "Verify agreement covers billing period before processing.",
+      "Check for active complaints or billing holds before issuing.",
+      "Confirm meter reads are available and quality is GOOD.",
+      "If zero consumption detected check for comm failure before billing."
+    ],
+    "REMINDER_HELD": [
+      "Check hardship flag before progressing reminder.",
+      "Verify no active assistance agreements before sending reminder.",
+      "Confirm account is on supply before escalation."
+    ],
+    "OUT_OF_CODE": [
+      "Validate tariff code against current agreement.",
+      "Check agreement expiry — may require renewal before billing.",
+      "Escalate to tariff team if product code mismatch found."
+    ],
+    "ZERO_CONSUMPTION": [
+      "Check consecutive zero days — 5 or more indicates comm failure.",
+      "Verify meter status is ACTIVE before raising estimation.",
+      "Do not estimate if comm failure is confirmed — escalate to field."
+    ],
+    "MISSING_METER_READ": [
+      "Check last successful read date.",
+      "Verify meter comm status and TDSP data feed.",
+      "If gap exceeds 10 days escalate to metering team."
+    ],
+    "TARIFF_MISMATCH": [
+      "Verify current agreement product code matches billing system.",
+      "Check agreement valid dates cover the billing period.",
+      "Escalate to tariff operations if mismatch cannot be auto-resolved."
+    ]
+  }
+}

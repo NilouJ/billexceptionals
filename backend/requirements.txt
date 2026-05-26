@@ -1,0 +1,10 @@
+fastapi
+uvicorn[standard]
+strands-agents
+strands-agents-tools
+boto3
+botocore
+python-dotenv
+websockets
+anthropic[bedrock]
+bedrock-agentcore

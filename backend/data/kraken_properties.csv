@@ -1,0 +1,101 @@
+property_id,account_number,address,city,postcode,state,label
+PROP-40000000,A-10000000,6973 Cedar Dr,Houston,77001,TX,Main property - Houston
+PROP-40000001,A-10000001,2145 River Rd,Houston,77002,TX,Main property - Houston
+PROP-40000002,A-10000002,3532 Elm Ln,Houston,77019,TX,Main property - Houston
+PROP-40000003,A-10000003,1184 Cedar Dr,Dallas,75201,TX,Main property - Dallas
+PROP-40000004,A-10000004,1896 Pine Blvd,Dallas,75202,TX,Main property - Dallas
+PROP-40000005,A-10000005,1927 Elm Ln,Austin,78701,TX,Main property - Austin
+PROP-40000006,A-10000006,109 Hill Rd,Austin,78702,TX,Main property - Austin
+PROP-40000007,A-10000007,8745 Hill Rd,San Antonio,78201,TX,Main property - San Antonio
+PROP-40000008,A-10000008,1263 Oak St,Fort Worth,76101,TX,Main property - Fort Worth
+PROP-40000009,A-10000009,7162 Main St,El Paso,79901,TX,Main property - El Paso
+PROP-40000010,A-10000010,928 Park Ave,Arlington,76010,TX,Main property - Arlington
+PROP-40000011,A-10000011,2636 Cedar Dr,Corpus Christi,78401,TX,Main property - Corpus Christi
+PROP-40000012,A-10000012,3953 River Rd,Plano,75023,TX,Main property - Plano
+PROP-40000013,A-10000013,252 Lake Dr,Lubbock,79401,TX,Main property - Lubbock
+PROP-40000014,A-10000014,1797 Pine Blvd,Houston,77001,TX,Main property - Houston
+PROP-40000015,A-10000015,5564 Pine Blvd,Houston,77002,TX,Main property - Houston
+PROP-40000016,A-10000016,5962 Cedar Dr,Houston,77019,TX,Main property - Houston
+PROP-40000017,A-10000017,6367 Oak St,Dallas,75201,TX,Main property - Dallas
+PROP-40000018,A-10000018,3025 Hill Rd,Dallas,75202,TX,Main property - Dallas
+PROP-40000019,A-10000019,5509 Hill Rd,Austin,78701,TX,Main property - Austin
+PROP-40000020,A-10000020,5078 Elm Ln,Austin,78702,TX,Main property - Austin
+PROP-40000021,A-10000021,5185 Cedar Dr,San Antonio,78201,TX,Main property - San Antonio
+PROP-40000022,A-10000022,2981 Park Ave,Fort Worth,76101,TX,Main property - Fort Worth
+PROP-40000023,A-10000023,7473 Elm Ln,El Paso,79901,TX,Main property - El Paso
+PROP-40000024,A-10000024,6897 River Rd,Arlington,76010,TX,Main property - Arlington
+PROP-40000025,A-10000025,9983 Cedar Dr,Corpus Christi,78401,TX,Main property - Corpus Christi
+PROP-40000026,A-10000026,1475 River Rd,Plano,75023,TX,Main property - Plano
+PROP-40000027,A-10000027,5833 Cedar Dr,Lubbock,79401,TX,Main property - Lubbock
+PROP-40000028,A-10000028,1871 Hill Rd,Houston,77001,TX,Main property - Houston
+PROP-40000029,A-10000029,6171 Maple Ave,Houston,77002,TX,Main property - Houston
+PROP-40000030,A-10000030,5380 Cedar Dr,Houston,77019,TX,Main property - Houston
+PROP-40000031,A-10000031,3230 Maple Ave,Dallas,75201,TX,Main property - Dallas
+PROP-40000032,A-10000032,7071 Park Ave,Dallas,75202,TX,Main property - Dallas
+PROP-40000033,A-10000033,3827 Main St,Austin,78701,TX,Main property - Austin
+PROP-40000034,A-10000034,3120 Oak St,Austin,78702,TX,Main property - Austin
+PROP-40000035,A-10000035,8661 River Rd,San Antonio,78201,TX,Main property - San Antonio
+PROP-40000036,A-10000036,7481 Hill Rd,Fort Worth,76101,TX,Main property - Fort Worth
+PROP-40000037,A-10000037,2430 Maple Ave,El Paso,79901,TX,Main property - El Paso
+PROP-40000038,A-10000038,523 Maple Ave,Arlington,76010,TX,Main property - Arlington
+PROP-40000039,A-10000039,5560 Main St,Corpus Christi,78401,TX,Main property - Corpus Christi
+PROP-40000040,A-10000040,6870 Oak St,Plano,75023,TX,Main property - Plano
+PROP-40000041,A-10000041,9124 Oak St,Lubbock,79401,TX,Main property - Lubbock
+PROP-40000042,A-10000042,6384 Cedar Dr,Houston,77001,TX,Main property - Houston
+PROP-40000043,A-10000043,8035 Main St,Houston,77002,TX,Main property - Houston
+PROP-40000044,A-10000044,8329 Hill Rd,Houston,77019,TX,Main property - Houston
+PROP-40000045,A-10000045,6326 Main St,Dallas,75201,TX,Main property - Dallas
+PROP-40000046,A-10000046,853 Main St,Dallas,75202,TX,Main property - Dallas
+PROP-40000047,A-10000047,7629 Elm Ln,Austin,78701,TX,Main property - Austin
+PROP-40000048,A-10000048,9470 Main St,Austin,78702,TX,Main property - Austin
+PROP-40000049,A-10000049,3215 Hill Rd,San Antonio,78201,TX,Main property - San Antonio
+PROP-40000050,A-10000050,2795 Elm Ln,Fort Worth,76101,TX,Main property - Fort Worth
+PROP-40000051,A-10000051,8891 Maple Ave,El Paso,79901,TX,Main property - El Paso
+PROP-40000052,A-10000052,2011 Pine Blvd,Arlington,76010,TX,Main property - Arlington
+PROP-40000053,A-10000053,6786 Elm Ln,Corpus Christi,78401,TX,Main property - Corpus Christi
+PROP-40000054,A-10000054,9883 Oak St,Plano,75023,TX,Main property - Plano
+PROP-40000055,A-10000055,4206 Pine Blvd,Lubbock,79401,TX,Main property - Lubbock
+PROP-40000056,A-10000056,810 Park Ave,Houston,77001,TX,Main property - Houston
+PROP-40000057,A-10000057,4931 Lake Dr,Houston,77002,TX,Main property - Houston
+PROP-40000058,A-10000058,1199 Maple Ave,Houston,77019,TX,Main property - Houston
+PROP-40000059,A-10000059,5861 Maple Ave,Dallas,75201,TX,Main property - Dallas
+PROP-40000060,A-10000060,574 Pine Blvd,Dallas,75202,TX,Main property - Dallas
+PROP-40000061,A-10000061,5414 Hill Rd,Austin,78701,TX,Main property - Austin
+PROP-40000062,A-10000062,844 Cedar Dr,Austin,78702,TX,Main property - Austin
+PROP-40000063,A-10000063,1280 River Rd,San Antonio,78201,TX,Main property - San Antonio
+PROP-40000064,A-10000064,4086 River Rd,Fort Worth,76101,TX,Main property - Fort Worth
+PROP-40000065,A-10000065,4293 Cedar Dr,El Paso,79901,TX,Main property - El Paso
+PROP-40000066,A-10000066,7345 Elm Ln,Arlington,76010,TX,Main property - Arlington
+PROP-40000067,A-10000067,7468 Hill Rd,Corpus Christi,78401,TX,Main property - Corpus Christi
+PROP-40000068,A-10000068,6447 River Rd,Plano,75023,TX,Main property - Plano
+PROP-40000069,A-10000069,2212 Hill Rd,Lubbock,79401,TX,Main property - Lubbock
+PROP-40000070,A-10000070,5698 Lake Dr,Houston,77001,TX,Main property - Houston
+PROP-40000071,A-10000071,7270 Oak St,Houston,77002,TX,Main property - Houston
+PROP-40000072,A-10000072,6356 Park Ave,Houston,77019,TX,Main property - Houston
+PROP-40000073,A-10000073,7461 Park Ave,Dallas,75201,TX,Main property - Dallas
+PROP-40000074,A-10000074,2492 Pine Blvd,Dallas,75202,TX,Main property - Dallas
+PROP-40000075,A-10000075,882 Cedar Dr,Austin,78701,TX,Main property - Austin
+PROP-40000076,A-10000076,8718 Park Ave,Austin,78702,TX,Main property - Austin
+PROP-40000077,A-10000077,9045 Main St,San Antonio,78201,TX,Main property - San Antonio
+PROP-40000078,A-10000078,7856 Elm Ln,Fort Worth,76101,TX,Main property - Fort Worth
+PROP-40000079,A-10000079,1453 River Rd,El Paso,79901,TX,Main property - El Paso
+PROP-40000080,A-10000080,1039 Maple Ave,Arlington,76010,TX,Main property - Arlington
+PROP-40000081,A-10000081,6177 Main St,Corpus Christi,78401,TX,Main property - Corpus Christi
+PROP-40000082,A-10000082,4778 Lake Dr,Plano,75023,TX,Main property - Plano
+PROP-40000083,A-10000083,6022 Park Ave,Lubbock,79401,TX,Main property - Lubbock
+PROP-40000084,A-10000084,9519 Maple Ave,Houston,77001,TX,Main property - Houston
+PROP-40000085,A-10000085,2797 Pine Blvd,Houston,77002,TX,Main property - Houston
+PROP-40000086,A-10000086,9334 Oak St,Houston,77019,TX,Main property - Houston
+PROP-40000087,A-10000087,2689 Lake Dr,Dallas,75201,TX,Main property - Dallas
+PROP-40000088,A-10000088,4482 Lake Dr,Dallas,75202,TX,Main property - Dallas
+PROP-40000089,A-10000089,479 Maple Ave,Austin,78701,TX,Main property - Austin
+PROP-40000090,A-10000090,6706 Main St,Austin,78702,TX,Main property - Austin
+PROP-40000091,A-10000091,9239 Main St,San Antonio,78201,TX,Main property - San Antonio
+PROP-40000092,A-10000092,9827 Main St,Fort Worth,76101,TX,Main property - Fort Worth
+PROP-40000093,A-10000093,941 Hill Rd,El Paso,79901,TX,Main property - El Paso
+PROP-40000094,A-10000094,1120 Pine Blvd,Arlington,76010,TX,Main property - Arlington
+PROP-40000095,A-10000095,4138 Elm Ln,Corpus Christi,78401,TX,Main property - Corpus Christi
+PROP-40000096,A-10000096,4858 Oak St,Plano,75023,TX,Main property - Plano
+PROP-40000097,A-10000097,3914 Oak St,Lubbock,79401,TX,Main property - Lubbock
+PROP-40000098,A-10000098,9506 Cedar Dr,Houston,77001,TX,Main property - Houston
+PROP-40000099,A-10000099,9001 Park Ave,Houston,77002,TX,Main property - Houston

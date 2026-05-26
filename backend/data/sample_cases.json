@@ -1,0 +1,57 @@
+[
+  {
+    "case_id": "CASE-001",
+    "account_number": "A-10000001",
+    "esiid": "ESI-001",
+    "exception_type": "UNBILLED",
+    "billing_period": "2026-03",
+    "billing_period_start": "2026-03-28",
+    "billing_period_end": "2026-04-27",
+    "source": "Tableau extract",
+    "description": "Clean workable case — should pass all agents and reach WORKABLE"
+  },
+  {
+    "case_id": "CASE-002",
+    "account_number": "A-10000002",
+    "esiid": "ESI-002",
+    "exception_type": "REMINDER_HELD",
+    "billing_period": "2026-03",
+    "billing_period_start": "2026-03-28",
+    "billing_period_end": "2026-04-27",
+    "source": "Tableau extract",
+    "description": "Active Ombudsman complaint — should EXCLUDE at triage"
+  },
+  {
+    "case_id": "CASE-003",
+    "account_number": "A-10000003",
+    "esiid": "ESI-003",
+    "exception_type": "UNBILLED",
+    "billing_period": "2026-03",
+    "billing_period_start": "2026-03-28",
+    "billing_period_end": "2026-04-27",
+    "source": "Tableau extract",
+    "description": "Pinned billing hold note — should EXCLUDE at triage"
+  },
+  {
+    "case_id": "CASE-004",
+    "account_number": "A-10000004",
+    "esiid": "ESI-004",
+    "exception_type": "UNBILLED",
+    "billing_period": "2026-03",
+    "billing_period_start": "2026-03-28",
+    "billing_period_end": "2026-04-27",
+    "source": "Tableau extract",
+    "description": "Active hardship agreement — should BLOCK at pre-check"
+  },
+  {
+    "case_id": "CASE-005",
+    "account_number": "A-10000005",
+    "esiid": "ESI-005",
+    "exception_type": "ZERO_CONSUMPTION",
+    "billing_period": "2026-03",
+    "billing_period_start": "2026-03-28",
+    "billing_period_end": "2026-04-27",
+    "source": "Tableau extract",
+    "description": "Life support + comm failure + expired agreement + move-out — multiple issues"
+  }
+]

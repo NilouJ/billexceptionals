@@ -1,0 +1,6 @@
+# Never bake local config or build artefacts into the image.
+.env
+.env.*
+__pycache__/
+*.pyc
+.DS_Store
