@@ -1,161 +1,119 @@
 # UC-1 Triage Hackathon — Thursday/Friday Plan
 
 **Squad:** Origin × Accenture hackathon team
-**Dates:** Thursday + Friday (this week)
+**Dates:** Thursday 2026-05-28 + Friday 2026-05-29
 **Judges:** Origin internal
 **Deliverable:** Live demo + deck + working code in this repo
 
+Start here: [`docs/05-success-criteria.md`](docs/05-success-criteria.md) for the *what we're aiming for and why*. This file is the **how** — work plan, roles, cut list.
+
 ---
 
-## The narrative — what we're selling
+## Pre-hackathon (Tuesday/Wednesday) — done
 
-Origin Energy's billing back-office processes **51,370 exception cases per month** across Unbilled, Held/Reminders, and Out-of-Code categories. Today, **30 FTEs — 36% of the entire billing team's capacity** — are consumed by *triage, pre-checks, and ground-rule checks*: a structured, rule-driven workflow that is highly automatable.
+Branch `hackathon-prep` already has the following landed and tested:
 
-This prototype replaces those four manual stages with a **multi-agent screening funnel** that runs the same case in seconds, with an audit trail, and produces a recommendation a Team Leader approves before any bill moves.
+- ✅ Real Strands multi-agent graph with 5 nodes and conditional skip edges
+- ✅ Provider abstraction — `LLM_PROVIDER=bedrock | azure | deterministic` (`backend/model_provider.py`)
+- ✅ Azure AI Foundry support via Strands `AnthropicModel` against Foundry's `/anthropic/` endpoint (smoke-tested end-to-end against `claude-sonnet-4-6`)
+- ✅ Deterministic fallback if the LLM call fails — demo never breaks
+- ✅ Origin branding pass (W1) — palette, logo, header, light-mode UI
+- ✅ Case search + filter pills in the sidebar
+- ✅ Demo data enrichment (W6) — 4 accounts seeded with the flags their ground-truth labels predict; R02-03 hardship bug fixed
+- ✅ Rule catalogue extension (T1) — R03-07 / R03-08 (PMD raised, Rate Tariff PMD), R03-10 (OOC > $5k threshold)
+- ✅ Scenario classification (T2) — SCEN-01..09 per FSD §3.4 in `scenarios.py`
+- ✅ Case-pack JSON output (T3) — `state["result"]["case_pack"]` matches FSD §3.4 contract; assembled deterministically from state
+- ✅ Chat backend (W2) — `backend/chat.py` + `/ws/chat` WebSocket, streaming, per-case in-memory conversation
+- ✅ Chat UI panel (W3) — right-side ChatPanel with 3 starter questions + streaming responses
+- ✅ Data drill-down (W4) — agent cards expandable with rule chips and evidence dict
+- ✅ Guided next-action chips (W5) — outcome-sized action buttons after FinalResult
+- ✅ Smoke test scripts (`backend/smoke_test_provider.py` and `smoke_test_graph.py`) for quick verification
+- ✅ Docs structure: README, HACKATHON.md, docs/01-04 (architecture, providers, rules, demo narrative), docs/05 (success criteria)
 
-**Headline numbers (from the proposal):**
+The squad arrives Thursday morning to a **working, branded, chat-enabled prototype** running locally with Azure AI Foundry.
 
-| Metric | Baseline | Target |
+---
+
+## What's left — Thursday + Friday
+
+### Day 1 — Thursday: HITL view + Bedrock validation
+
+| ID | Task | Owner | Effort | Why |
+|---|---|---|---|---|
+| **T4** | **Team Leader HITL view** — new screen listing today's cases with Approve / Override / Spot-Check actions. The governance story for judges. | Frontend lead | 4h | S3 (guided), S5 (production-credible governance) |
+| **W7** | **AWS Bedrock validation** — when access lands, smoke-test against `claude-sonnet-4-5`. Just flip `LLM_PROVIDER=bedrock` in `backend/.env`. If anything breaks, fix model_provider.py before noon. | Backend lead | 1h | S5 (SP51 target platform proven) |
+| **T9-prep** | Pick the 3 hero demo cases (1 WORKABLE, 1 EXCLUDE_AT_TRIAGE, 1 UNWORKABLE) — rehearse asking the chat the same 3 questions on each so the demo runs predictably | Rafael | 2h | S1, S2, S3 |
+| **Polish** | Inline error states, empty states, mobile-narrow handling (judge laptops can be quirky), no-screen-flash-on-reload | Frontend lead | 2h | S4, S5 |
+
+### Day 2 — Friday: scale, deck, rehearsal
+
+| ID | Task | Owner | Effort | Why |
+|---|---|---|---|---|
+| **T5** | **`/screen/batch` endpoint** — process all 100 cases, stream aggregate funnel | Backend lead | 2h | S5 (volume story) |
+| **T6** | **KPI panel** — funnel chart + 3 headline numbers (FTEs freed, $M/year, TAT) anchored to proposal targets | Frontend lead | 2h | S3, S5 |
+| **T7** | **SOP RAG (stretch)** — swap `scenarios.py` hardcoded SOPs for Bedrock KB or Azure AI Search. Drops first if Friday is tight. | Anyone | 3h | S1, S5 |
+| **T8** | **Deck refresh** — pull base slides from `output/uc1-triage/slides/Origin_UC1_Proposal_Deck_Native.pptx`. Add: demo placeholder, "same model two clouds" architecture slide, Day-2 KPIs. | Rafael | 3h | Sales-ready |
+| **T9** | **Demo rehearsal × 2** — once at lunch, once 1h before judging | Whole squad | 2h | Lands the demo |
+
+---
+
+## Cut list if Friday gets tight
+
+Strict drop order — drop top-down:
+
+1. **T7 SOP RAG** — scenarios.py already has SOPs; RAG is icing
+2. **T6 KPI panel** — verbal narration ("at 51,370 cases/month, this is roughly 30 FTEs freed") works
+3. **T5 Batch endpoint** — show a screenshot of the funnel instead of running live
+4. **W7 Bedrock validation** — if access never arrives, Azure Foundry is the demo. *Same model, two clouds* — that's the architecture story
+5. **T4 HITL view** — **last resort cut**. Chat handles part of the governance story but HITL adds the visible human gate
+6. **DO NOT cut**: anything pre-hackathon already done, polish, rehearsal
+
+---
+
+## Demo flow (5 minutes)
+
+Detail in [`docs/04-demo-narrative.md`](docs/04-demo-narrative.md). Shape:
+
+1. **Hook (30s)** — *"30 FTEs, $2.7M, 51,370 cases. Watch the same job in seconds."*
+2. **Case + screening (90s)** — pick a case → Run Screening → 5 cards stream → land on the recommendation
+3. **Drill-down (45s)** — click an agent card → see the rules that fired + evidence. Click another → see scenario classification → see the SOP reference and recommended actions.
+4. **Chat (75s)** — *"Why was this excluded?"* → Claude streams a plain-English answer citing rule IDs. Follow up: *"Show me the meter reads."* → Claude pulls from the case state.
+5. **Next action (15s)** — click "Send to onshore queue" — case routes. Click "Ask the assistant" — chat focuses for the analyst.
+6. **Architecture punchline (30s)** — *"Provider-agnostic. Today on Azure AI Foundry. Flip an env var, runs on Bedrock — SP51's target. Same model, two clouds — Origin's choice."*
+7. **Numbers + close (30s)** — KPI panel (if T6 lands) — *30 FTEs / $2.7M / >99% timeliness / 13-week build path.*
+
+---
+
+## Roles
+
+| Track | Day 1 (Thu) | Day 2 (Fri) |
 |---|---|---|
-| FTE freed from screening | 0 | **30 FTEs (36% of team)** |
-| Billing timeliness | 98.5% | **>99%** |
-| Annual value (UC-1 alone) | — | **~$2.7M** |
-| TAT reduction | — | **20–25%** |
-
-*Source: `output/uc1-triage/01-functional-solution-design.md §1` in the proposal repo.*
-
-The provider-agnostic LLM design (Bedrock OR Azure AI Foundry) is the deliberate architecture punchline: **same model, two clouds — Origin's choice.**
+| **Backend lead** | T4-backend support, W7 Bedrock validation | T5 batch endpoint, T7 RAG stretch |
+| **Frontend lead** | T4 HITL view, polish | T6 KPI panel, integration polish |
+| **Coordinator** (Rafael) | T9-prep hero cases, standups | T8 deck, T9 rehearsal × 2 |
+| **Demo driver** | TBD | T9 rehearsal x2 |
 
 ---
 
-## What's already done (pre-hackathon, Wed)
-
-- ✅ Real Strands multi-agent graph with 5 nodes and conditional skip edges (`backend/graph_topology.py`)
-- ✅ Provider abstraction — `LLM_PROVIDER=bedrock|azure|deterministic` (`backend/model_provider.py`)
-- ✅ Azure AI Foundry support via Strands AnthropicModel pointed at Foundry's `/anthropic/` endpoint
-- ✅ Graceful fallback to deterministic outcome on any LLM failure — demo never breaks
-- ✅ React + WebSocket UI streaming agent cards live, with provider badges (Bedrock blue / Azure purple / Fallback amber)
-- ✅ 10 synthetic CSVs mocking Kraken's shape, 100 exception cases ready
-- ✅ Feedback capture endpoint (`/feedback` → `data/feedback_store.json`)
-- ✅ Docs structure (`docs/` + this file + README)
-
-## What we're building — Day 1 (Thursday)
-
-**Goal:** Close the gap between the prototype's rule coverage and the proposal's PC/GR catalogue, add the SCEN-01..09 scenario classification, and stand up the Team Leader HITL view.
-
-### T1 — Rule catalogue extension *(backend lead, ~3h)*
-
-Add the proposal's missing exclusion rules. Each new rule needs a `rule_id`, a `tools.py` data path, and an entry in the relevant agent.
-
-| New rule | Source agent | Data path |
-|---|---|---|
-| **GR-01 / GR-04: PMD already raised** | groundrule | Add `pmd_status` column to `kraken_lifecycle_processes.csv` or new `kraken_pmd_requests.csv` |
-| **GR-02: PMD for Rate Tariff Issue** | groundrule | Type field on PMD record |
-| **GR-07: QLD EM meter (OOC cases)** | groundrule | `meter.state` + `meter.type` on `kraken_meter_points.csv` |
-| **GR-08: OOC amount > $5,000** | groundrule | Add `ooc_amount` to `origin_exceptions.csv` |
-
-See [`docs/03-rules-and-scenarios.md`](docs/03-rules-and-scenarios.md) for the full mapping table.
-
-### T2 — Scenario classification (SCEN-01..09) *(backend lead, ~2h)*
-
-Refactor `sop_context_agent` to emit a `scenario_code` per the proposal's §3.4 logic — not just an SOP-list-by-exception-type. Each scenario triggers a specific SOP category.
-
-### T3 — Case-pack JSON output *(backend lead, ~1h)*
-
-Restructure `state["result"]` to match the case-pack contract from `01-functional-solution-design.md §3.4`:
-
-```json
-{
-  "caseId": "...", "exceptionType": "...", "scenario": "SCEN-01",
-  "accountSummary": {...}, "issuesIdentified": [...],
-  "sopReference": {...}, "recommendedActions": [...],
-  "groundRuleOutputs": {...}, "auditTrail": {...}
-}
-```
-
-### T4 — Team Leader HITL view *(frontend lead, ~4h)*
-
-New screen in the UI: list of cases run today with Approve / Override / Spot-Check actions. This is the demo's emotional payoff — judges see a real human-in-the-loop gate, not an autonomous robot.
-
-Wire-frame in [`docs/04-demo-narrative.md`](docs/04-demo-narrative.md).
-
----
-
-## What we're building — Day 2 (Friday)
-
-**Goal:** Batch run, KPI panel, polish, demo rehearsal x2.
-
-### T5 — Batch endpoint `/screen/batch` *(backend lead, ~2h)*
-
-Process all 100 cases through the graph, stream aggregate funnel: how many excluded at each stage, by reason, by scenario.
-
-### T6 — KPI panel *(frontend lead, ~2h)*
-
-Anchor the on-screen numbers to proposal targets:
-
-> *"x of 100 → onshore (≈y of 51,370/mo); ≈z FTEs freed; ≈$N annualised at current AHT."*
-
-The math is in `02-delivery-plan.md` of the proposal repo.
-
-### T7 — SOP RAG (stretch) *(if anyone has capacity, ~3h)*
-
-Swap `tools.py:get_sop()`'s hard-coded dict for **Bedrock Knowledge Bases** OR **Azure AI Search** — same provider-agnostic principle. Drops first if time slips.
-
-### T8 — Deck refresh *(Rafael, ~3h)*
-
-Pull from `output/uc1-triage/slides/Origin_UC1_Proposal_Deck_Native.pptx`. Reuse the FTE-impact slide, the architecture diagram, the swim-lane comparison. Add 3 new slides:
-1. "Live demo" placeholder
-2. Provider-agnostic architecture story (Bedrock + Azure AI Foundry)
-3. Day-2 outcomes (KPIs from the batch run)
-
-### T9 — Demo rehearsal *(whole squad, 2 × 30min)*
-
-Once at lunch Friday, once 1h before judging.
-
----
-
-## Cut list (if Friday gets tight)
-
-In strict drop order:
-
-1. **SOP RAG (T7)** — drop first, the deterministic dict already shows the SOP delivery
-2. **KPI panel (T6)** — verbal narration of the numbers is fine if visual isn't ready
-3. **Batch endpoint (T5)** — single-case demo + one canned screenshot of "if we ran all 100" works
-4. **HITL view (T4)** — DO NOT drop. This is the killer moment.
-5. **Rule extensions (T1) + Scenarios (T2)** — DO NOT drop. This is what makes the demo proposal-credible.
-
----
-
-## Demo flow (5 minutes — judging slot)
-
-See [`docs/04-demo-narrative.md`](docs/04-demo-narrative.md) for the full beat-by-beat. The shape:
-
-1. **Hook (30s)** — "Origin spends 30 FTEs and ~$2.7M/year on what is fundamentally a rule-based workflow. Here's the same job in seconds."
-2. **Single-case deep dive (90s)** — pick an EXCLUDE case, hit Run, watch the cards stream. Land on the LLM-generated rationale.
-3. **Provider switch (30s)** — flip the env var, run again. *"Same model, two clouds — Origin's choice."*
-4. **Batch run (60s)** — kick off all 100 cases, show the funnel + scenario distribution.
-5. **HITL approval (60s)** — Team Leader screen, approve one batch, override one. *"No bill moves without a human."*
-6. **Numbers (30s)** — KPI panel anchored to proposal. *"30 FTEs back. $2.7M/year. Audit by design."*
-
----
-
-## Roles (placeholders — fill in once squad confirmed)
-
-| Role | Owner | Day 1 | Day 2 |
-|---|---|---|---|
-| Backend / Strands | TBD | T1, T2, T3 | T5 (batch), T7 (RAG stretch) |
-| Frontend / HITL | TBD | T4 (HITL view) | T6 (KPI panel) |
-| Deck + narrative | Rafael | Coordination + content | T8 (deck), T9 (rehearsal) |
-| Demo driver | TBD | — | T9 (rehearsal x2) |
-
----
-
-## Risks + mitigations
+## Risks
 
 | Risk | Mitigation |
 |---|---|
-| AWS Bedrock access doesn't land by Thursday | **Already mitigated** — provider abstraction lets us run Azure AI Foundry end-to-end. Flip a single env var if Bedrock arrives mid-hackathon. |
-| Foundry deployment misconfigured (auth or model name) | Smoke-test Wednesday evening with `LLM_PROVIDER=azure` against a single case before the team arrives. |
-| Rule extensions take longer than 3h | Cut order in the cut-list above. The 4 most impactful rules (PMD, QLD meter, OOC > $5k) take priority — drop the rest. |
-| HITL view rabbit-hole | Keep the UI dumb: just a list + Approve button. No real persistence, just in-memory state. Audit log is the proposal feature; here it's a demo prop. |
-| LLM hallucinates outside the allowed recommendations | Already mitigated — `LLMOutcomeNode` validates against `ALLOWED_RECOMMENDATIONS` and falls back deterministic on any error. |
+| AWS Bedrock access doesn't land by Thursday | Already mitigated — Azure AI Foundry is the demo path. Bedrock validation is a Thursday-morning *bonus*, not a blocker. |
+| LLM call fails mid-demo (network, throttle) | Already mitigated — `LLMOutcomeNode` falls back to deterministic outcome and shows FALLBACK badge. Demo continues. |
+| Chat hallucinates outside the case data | Already mitigated — system prompt is strict: *"If unsure, say 'I don't have that data in this case' — never fabricate."* |
+| Wrong case picked on stage that doesn't trip the expected rule | Already mitigated — W6 enrichment + the T9-prep hero-case rehearsal locks in 3 predictable cases. |
+| T4 HITL rabbit-hole (backend persistence, real approval queue) | Keep it dumb — in-memory list, Approve/Override buttons that just update local state. Audit log is a demo prop, not a real Delta Lake row. |
+| Two devs collide on App.css | Set up branches per feature; PR small. Or coordinate via Slack. |
+
+---
+
+## Repo + branch workflow
+
+| | |
+|---|---|
+| Main branch | `master` (protected — squad doesn't push here) |
+| Working branch | `hackathon-prep` (this branch, where the pre-hackathon work lives) |
+| Squad branches | Per-feature off `hackathon-prep` (e.g. `hitl-view`, `kpi-panel`) — merge back via PR |
+| Friday afternoon | Final merge `hackathon-prep` → `master` after rehearsal pass |
+| Demo machine | Pull `hackathon-prep` (or master after Friday merge); `LLM_PROVIDER=azure` in `backend/.env` until Bedrock confirmed |
