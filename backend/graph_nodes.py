@@ -24,7 +24,7 @@ import time
 from strands import Agent
 from strands.multiagent.base import MultiAgentBase, MultiAgentResult, NodeResult, Status
 
-from agents import _trace, case_screening_outcome_agent
+from agents import _trace, assemble_case_pack, case_screening_outcome_agent
 from model_provider import get_outcome_model, provider_model_id, provider_source_tag
 from schemas import AGENT_LABELS
 
@@ -223,6 +223,7 @@ class LLMOutcomeNode(MultiAgentBase):
                 "rationale":      rationale,
                 "next_action":    next_action,
                 "summary":        summary,
+                "case_pack":      assemble_case_pack(state, recommendation, summary),
             }
             trace_reasons = []
             if summary:

@@ -20,11 +20,13 @@ Trace entry:
 """
 
 from schemas import AGENT_LABELS
+from scenarios import classify_scenario, get_scenario
 from tools import (
     get_account,
     get_metering,
     get_agreement,
     get_service_orders,
+    get_pmd_requests,
     get_sop,
 )
 
@@ -153,18 +155,11 @@ def precheck_agent(state):
             "reason":  "Life support equipment registered — special handling required.",
         })
 
-    if account.get("activeHardshipAgreements"):
+    if account.get("isInHardship"):
         evidence["hasActiveHardship"] = True
-        ha = account["activeHardshipAgreements"][0]
         rule_hits.append({
             "rule_id": "R02-03",
-            "reason":  f"Active hardship agreement (ends {ha.get('endDate', 'unknown')}) — billing suspended.",
-        })
-
-    if account.get("assistanceAgreements"):
-        rule_hits.append({
-            "rule_id": "R02-04",
-            "reason":  "Active assistance agreement — billing on hold.",
+            "reason":  "Customer flagged as in financial hardship — billing on hold pending review.",
         })
 
     zero_days = metering.get("consecutive_zero_days", 0)
@@ -262,6 +257,42 @@ def groundrule_agent(state):
             "reason":  f"Active {o.get('process_type')} process — status {o.get('status')}.",
         })
 
+    # PMD checks — proposal §2.3 GR-01 / GR-02 / GR-04
+    pmd_requests = get_pmd_requests(acct_no)
+    state["context"]["pmd_requests"] = pmd_requests
+    evidence["pmd_request_count"] = len(pmd_requests)
+
+    if pmd_requests:
+        # GR-02 (R03-08): Rate Tariff Issue PMD takes precedence in the trace
+        tariff_pmds = [p for p in pmd_requests if p.get("type") == "RATE_TARIFF_ISSUE"]
+        general_pmds = [p for p in pmd_requests if p.get("type") != "RATE_TARIFF_ISSUE"]
+        if tariff_pmds:
+            p = tariff_pmds[0]
+            rule_hits.append({
+                "rule_id": "R03-08",
+                "reason":  f"Active PMD raised {p.get('raised_date')} for Rate Tariff Issue — onshore tariff team owns resolution.",
+            })
+        if general_pmds and not tariff_pmds:
+            p = general_pmds[0]
+            rule_hits.append({
+                "rule_id": "R03-07",
+                "reason":  f"PMD request already raised on {p.get('raised_date')} (status {p.get('status')}) — case is in-flight onshore.",
+            })
+
+    # OOC threshold — proposal §2.3 GR-08
+    if case.get("exception_type") == "OUT_OF_CODE":
+        ooc_amount_raw = case.get("ooc_amount")
+        try:
+            ooc_amount = int(float(ooc_amount_raw)) if ooc_amount_raw not in (None, "", "None") else 0
+        except (TypeError, ValueError):
+            ooc_amount = 0
+        evidence["ooc_amount"] = ooc_amount
+        if ooc_amount > 5000:
+            rule_hits.append({
+                "rule_id": "R03-10",
+                "reason":  f"OOC credit amount ${ooc_amount:,} exceeds the $5,000 threshold — onshore approval required.",
+            })
+
     if rule_hits:
         _trace(state, "groundrule", "RETURN_TO_ONSHORE_UNWORKABLE", rule_hits=rule_hits, evidence=evidence)
         state["context"]["groundrule_unworkable"] = True
@@ -280,24 +311,37 @@ def sop_context_agent(state):
     agreement      = state["context"].get("agreement", {})
     metering       = state["context"].get("metering", {})
 
-    sops = get_sop(exception_type)
-    state["context"]["sops"] = sops
+    # Classify scenario per FSD §3.4 (SCEN-01..09)
+    scenario_code, data_available = classify_scenario(case, state["context"], state["trace"])
+    scenario = get_scenario(scenario_code)
+    state["context"]["scenario_code"] = scenario_code
+    state["context"]["scenario"]      = scenario
+
+    # Keep legacy `sops` list available for backward-compatible callers.
+    state["context"]["sops"] = scenario["sop"]["key_steps"]
 
     evidence = {
-        "exception_type": exception_type,
-        "product_code":   agreement.get("product_code"),
-        "rate_per_kwh":   agreement.get("rate_per_kwh"),
-        "tdsp":           metering.get("tdsp"),
-        "load_zone":      metering.get("load_zone"),
-        "sops_retrieved": len(sops),
+        "exception_type":  exception_type,
+        "scenario_code":   scenario_code,
+        "scenario_title":  scenario["title"],
+        "scenario_trigger": scenario["trigger"],
+        "sop_id":          scenario["sop"]["id"],
+        "sop_title":       scenario["sop"]["title"],
+        "data_available":  data_available,
+        "product_code":    agreement.get("product_code"),
+        "rate_per_kwh":    agreement.get("rate_per_kwh"),
+        "tdsp":            metering.get("tdsp"),
+        "load_zone":       metering.get("load_zone"),
+        "sops_retrieved":  len(scenario["sop"]["key_steps"]),
     }
 
-    if sops:
+    if scenario["sop"]["key_steps"]:
+        confidence_note = "" if data_available else " (type-default — signal data not in this prototype)"
         _trace(
             state,
             "sop_context",
             "CONTEXT_ASSEMBLED",
-            reasons=[f"Retrieved {len(sops)} SOP rules for exception type {exception_type}."],
+            reasons=[f"Classified as {scenario_code}: {scenario['title']}{confidence_note}. SOP {scenario['sop']['id']} retrieved."],
             evidence=evidence,
         )
     else:
@@ -308,7 +352,7 @@ def sop_context_agent(state):
             "SOP_GAP",
             rule_hits=[{
                 "rule_id": "R04-01",
-                "reason":  f"No SOPs found for exception type {exception_type} — flagging for human review.",
+                "reason":  f"No SOP defined for scenario {scenario_code} — flagging for human review.",
             }],
             evidence=evidence,
         )
@@ -347,18 +391,19 @@ def case_screening_outcome_agent(state):
     else:
         recommendation = "WORKABLE"
         agreement = context.get("agreement", {})
-        sops      = context.get("sops", [])
+        scenario  = context.get("scenario", {})
         all_reasons = [
             f"Account is on supply with active {agreement.get('product_code')} agreement.",
             f"Meter reads are complete and quality is good.",
-            f"{len(sops)} SOP rules confirm workable path for {case['exception_type']}.",
+            f"Classified as {context.get('scenario_code', '—')}: {scenario.get('title', '')}.",
         ]
-        summary = f"Case {case_id} is workable — allocate to billing team for processing."
+        summary = f"Case {case_id} is workable — allocate to billing team for processing per SOP {scenario.get('sop', {}).get('id', '—')}."
 
     state["result"] = {
         "recommendation": recommendation,
         "reason_codes":   all_reasons,
         "summary":        summary,
+        "case_pack":      assemble_case_pack(state, recommendation, summary),
     }
 
     _trace(
@@ -370,3 +415,91 @@ def case_screening_outcome_agent(state):
     )
 
     return state
+
+
+# ── Case-pack assembler (FSD §3.4) ─────────────────────────────────────────────
+
+def assemble_case_pack(state: dict, recommendation: str, summary: str) -> dict:
+    """
+    Assemble the case-pack JSON delivered to downstream consumers (billing
+    team UI, audit log, the chat agent). Pulled deterministically from state
+    — no LLM in this path so the structure is guaranteed.
+
+    Shape mirrors the proposal's `output/uc1-triage/01-functional-solution-design.md §3.4`
+    case-pack contract: caseId, exceptionType, scenario, accountSummary,
+    issuesIdentified, sopReference, recommendedActions, groundRuleOutputs,
+    auditTrail.
+    """
+    case      = state["case"]
+    context   = state["context"]
+    trace     = state["trace"]
+    account   = context.get("account", {}) or {}
+    agreement = context.get("agreement", {}) or {}
+    metering  = context.get("metering", {}) or {}
+    scenario_code = context.get("scenario_code") or ""
+    scenario      = context.get("scenario") or {}
+
+    # accountSummary — the analyst-facing snapshot of the customer
+    account_summary = {
+        "account_number":     case.get("account_number"),
+        "billing_name":       account.get("billingName"),
+        "status":             account.get("status"),
+        "is_on_supply":       account.get("isOnSupply"),
+        "in_hardship":        account.get("isInHardship"),
+        "meter_point_status": account.get("meterPointStatus"),
+        "balance":            account.get("balance"),
+        "overdue_balance":    account.get("overdueBalance"),
+        "agreement_status":   agreement.get("agreement_status") or ("active" if agreement.get("product_code") else None),
+        "product_code":       agreement.get("product_code"),
+        "rate_per_kwh":       agreement.get("rate_per_kwh"),
+        "billing_period_start": case.get("billing_period_start"),
+        "billing_period_end":   case.get("billing_period_end"),
+        "nmi_or_esiid":       case.get("esiid"),
+        "meter_type":         metering.get("meter_type"),
+        "last_read_date":     metering.get("last_read_date"),
+    }
+
+    # issuesIdentified — flatten all rule_hits across the trace
+    issues = []
+    for t in trace:
+        for h in (t.get("rule_hits") or []):
+            issues.append({
+                "stage":    t.get("agent_key"),
+                "rule_id":  h.get("rule_id"),
+                "reason":   h.get("reason"),
+            })
+
+    # groundRuleOutputs — compact view of each agent's decision
+    ground_rule_outputs = [
+        {
+            "agent":     t.get("agent_key"),
+            "decision":  t.get("decision"),
+            "rule_ids":  [h.get("rule_id") for h in (t.get("rule_hits") or [])],
+        }
+        for t in trace
+    ]
+
+    # auditTrail — for the production team, this becomes the Delta Lake row
+    audit_trail = {
+        "case_id":         case.get("case_id"),
+        "screening_agents": len(trace),
+        "rule_hit_count":  len(issues),
+        "scenario_code":   scenario_code,
+        "recommendation":  recommendation,
+        "billing_period":  f"{case.get('billing_period_start','')} to {case.get('billing_period_end','')}",
+    }
+
+    return {
+        "case_id":         case.get("case_id"),
+        "exception_type":  case.get("exception_type"),
+        "scenario":        scenario_code,
+        "scenario_title":  scenario.get("title", ""),
+        "account_summary": account_summary,
+        "issues_identified": issues,
+        "sop_reference":   scenario.get("sop", {}),
+        "recommended_actions": scenario.get("recommended_actions", []),
+        "ground_rule_outputs": ground_rule_outputs,
+        "audit_trail":     audit_trail,
+        "summary":         summary,
+        "recommendation":  recommendation,
+    }

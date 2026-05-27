@@ -185,6 +185,29 @@ def get_service_orders(account_number):
     ]
 
 
+def get_pmd_requests(account_number):
+    """
+    Return active PMD (Provide Meter Data) requests for the account.
+    Drives R03-07 (PMD already raised) and R03-08 (PMD for Rate Tariff Issue)
+    — see proposal §2.3 GR-01 / GR-02 / GR-04.
+    """
+    try:
+        rows = _read("kraken_pmd_requests.csv")
+    except FileNotFoundError:
+        return []
+    return [
+        {
+            "pmd_id":      p.get("pmd_id"),
+            "type":        p.get("type"),
+            "status":      p.get("status"),
+            "raised_date": p.get("raised_date"),
+        }
+        for p in rows
+        if p.get("account_number") == account_number
+        and p.get("status") in ("PENDING", "IN_PROGRESS")
+    ]
+
+
 def get_sop(exception_type):
     """
     Return SOP rules for the exception type.
