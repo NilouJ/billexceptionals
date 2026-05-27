@@ -36,7 +36,7 @@ export default function App() {
     <div className="app">
       <aside className="sidebar">
         <a href="/" className="brand-link">
-          <img src="/origin-logo.svg" alt="Origin" className="brand-logo" />
+          <img src="/origin-logo.png" alt="Origin" className="brand-logo" />
         </a>
         <CaseList onSelect={setSelectedCase} selectedId={selectedCase?.exception_id} />
       </aside>

@@ -5,9 +5,9 @@
   --panel-2:   #f3f4f6;   /* sub-panel / hover background */
   --text:      #1f2937;   /* primary text — charcoal */
   --muted:     #6b7280;   /* secondary text — mid grey */
-  --accent:    #EC1C24;   /* Origin Red — primary CTA + active state */
-  --accent-dark: #b71924; /* Origin Red — hover / pressed */
-  --accent-soft: rgba(236, 28, 36, 0.10); /* Origin Red — subtle background */
+  --accent:    #FF6124;   /* Origin Orange — primary CTA + active state */
+  --accent-dark: #D4501C; /* Origin Orange — hover / pressed */
+  --accent-soft: rgba(255, 97, 36, 0.10); /* Origin Orange — subtle background */
   --ok:        #16a34a;   /* success — green */
   --warn:      #f59e0b;   /* warning — amber */
   --err:       #b91c1c;   /* error — deep red (distinct from accent) */
