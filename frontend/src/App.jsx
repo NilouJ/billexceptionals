@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import CaseList from "./components/CaseList.jsx";
 import CaseDetails from "./components/CaseDetails.jsx";
 import AgentPipeline from "./components/AgentPipeline.jsx";
@@ -6,17 +6,48 @@ import TraceLog from "./components/TraceLog.jsx";
 import FinalResult from "./components/FinalResult.jsx";
 import FeedbackForm from "./components/FeedbackForm.jsx";
 import ChatPanel from "./components/ChatPanel.jsx";
+import BatchDashboard from "./components/BatchDashboard.jsx";
 import useScreening from "./hooks/useScreening.js";
+import { fetchCases } from "./api/rest.js";
 import "./styles/App.css";
 
 export default function App() {
   const [selectedCase, setSelectedCase] = useState(null);
+  const [cases, setCases] = useState([]);
+  const [casesError, setCasesError] = useState(null);
+  const [runs, setRuns] = useState({}); // exception_id -> recommendation
   const { agents, trace, result, status, run, reset } = useScreening();
+
+  useEffect(() => {
+    fetchCases().then(setCases).catch((e) => setCasesError(e.message));
+  }, []);
+
+  // Record the recommendation for each case as runs complete.
+  useEffect(() => {
+    if (!result || !selectedCase) return;
+    const id = selectedCase.exception_id;
+    const rec = result.recommendation;
+    if (!id || !rec) return;
+    setRuns((prev) => (prev[id] === rec ? prev : { ...prev, [id]: rec }));
+  }, [result, selectedCase]);
 
   const onRun = () => {
     if (!selectedCase) return;
     reset();
     run({ ...selectedCase, case_id: selectedCase.case_id ?? selectedCase.exception_id });
+  };
+
+  const handleSelectCase = (c) => {
+    if ((c?.exception_id ?? null) !== (selectedCase?.exception_id ?? null)) {
+      reset();
+    }
+    setSelectedCase(c);
+  };
+
+  const resetDemo = () => {
+    setRuns({});
+    reset();
+    setSelectedCase(null);
   };
 
   // Snapshot the screening state for the chat panel. Built from what the
@@ -38,10 +69,22 @@ export default function App() {
         <a href="/" className="brand-link">
           <img src="/origin-logo.png" alt="Origin" className="brand-logo" />
         </a>
-        <CaseList onSelect={setSelectedCase} selectedId={selectedCase?.exception_id} />
+        <CaseList
+          cases={cases}
+          runs={runs}
+          error={casesError}
+          onSelect={handleSelectCase}
+          selectedId={selectedCase?.exception_id}
+        />
       </aside>
 
       <main className="main">
+        <BatchDashboard
+          batchSize={cases.length}
+          runs={runs}
+          onReset={resetDemo}
+        />
+
         <header className="main-header">
           <div className="page-title">
             <h1>Bill Exceptions Assistant</h1>

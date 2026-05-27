@@ -12,6 +12,85 @@
 .brand-logo { height: 28px; display: block; }
 
 .main { padding: 28px 32px; overflow-y: auto; }
+
+/* ─── Batch dashboard (top of main) ────────────────────────────────────────── */
+.batch-dashboard {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+.batch-dashboard-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  padding: 12px 16px;
+  cursor: pointer;
+  font-size: 13px;
+  text-align: left;
+}
+.batch-dashboard-toggle:hover { background: var(--panel-2); }
+.batch-dashboard-chevron { color: var(--muted); font-size: 11px; width: 12px; }
+.batch-dashboard-title { font-weight: 700; letter-spacing: 0.2px; }
+.batch-dashboard-summary { margin-left: auto; color: var(--muted); font-size: 12px; }
+.batch-dashboard-body {
+  display: flex;
+  align-items: stretch;
+  gap: 16px;
+  padding: 4px 16px 16px 16px;
+  border-top: 1px solid var(--border);
+}
+.batch-tiles {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.batch-tile {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 14px;
+}
+.batch-tile-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--muted);
+}
+.batch-tile-value {
+  font-size: 22px;
+  font-weight: 700;
+  margin-top: 4px;
+  letter-spacing: -0.3px;
+}
+.batch-tile-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.batch-tile.tone-accent .batch-tile-value { color: var(--accent); }
+.batch-tile.tone-ok     .batch-tile-value { color: var(--ok, #4ade80); }
+.batch-tile.tone-warn   .batch-tile-value { color: var(--warn, #fbbf24); }
+.batch-reset {
+  align-self: center;
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: border-color 0.15s, color 0.15s;
+}
+.batch-reset:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+.batch-reset:disabled { opacity: 0.45; cursor: not-allowed; }
+
 .main-header {
   display: flex;
   justify-content: space-between;
@@ -79,15 +158,17 @@
 
 .case-count { font-size: 11px; color: var(--muted); margin-bottom: 8px; }
 
-.gt-chip {
+.result-chip {
   font-size: 9px;
   font-weight: 700;
   padding: 1px 6px;
   border-radius: 4px;
   letter-spacing: 0.4px;
+  text-transform: uppercase;
 }
-.gt-chip.gt-workable { background: rgba(34, 197, 94, 0.18);  color: #4ade80; }
-.gt-chip.gt-onshore  { background: rgba(245, 158, 11, 0.18); color: #fbbf24; }
+.result-chip.result-workable   { background: rgba(34, 197, 94, 0.18);  color: var(--ok,   #4ade80); }
+.result-chip.result-unworkable { background: rgba(245, 158, 11, 0.18); color: var(--warn, #fbbf24); }
+.result-chip.result-other      { background: var(--panel-2);           color: var(--muted); }
 
 .case-details {
   background: var(--panel);

@@ -1,35 +1,36 @@
-import { useEffect, useMemo, useState } from "react";
-import { fetchCases } from "../api/rest.js";
+import { useMemo, useState } from "react";
 
-const ROUTING_FILTERS = [
-  { key: "ALL",      label: "All" },
-  { key: "WORKABLE", label: "Workable" },
-  { key: "ONSHORE",  label: "Onshore" },
+const STATUS_FILTERS = [
+  { key: "ALL",         label: "All" },
+  { key: "UNPROCESSED", label: "Unprocessed" },
+  { key: "PROCESSED",   label: "Processed" },
 ];
 
-export default function CaseList({ onSelect, selectedId }) {
-  const [cases, setCases] = useState([]);
-  const [error, setError] = useState(null);
-  const [query, setQuery] = useState("");
-  const [routing, setRouting] = useState("ALL");
+function outcomeOf(recommendation) {
+  if (!recommendation) return null;
+  if (recommendation === "WORKABLE") return "workable";
+  if (recommendation.startsWith("RETURN_TO_ONSHORE")) return "unworkable";
+  return "other";
+}
 
-  useEffect(() => {
-    fetchCases().then(setCases).catch((e) => setError(e.message));
-  }, []);
+export default function CaseList({ cases = [], runs = {}, error = null, onSelect, selectedId }) {
+  const [query, setQuery] = useState("");
+  const [statusFilter, setStatusFilter] = useState("ALL");
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return cases.filter((c) => {
-      if (routing !== "ALL" && (c.gt_final_routing || "") !== routing) return false;
+      const processed = Boolean(runs[c.exception_id]);
+      if (statusFilter === "PROCESSED"   && !processed) return false;
+      if (statusFilter === "UNPROCESSED" &&  processed) return false;
       if (!q) return true;
       return (
-        (c.exception_id     || "").toLowerCase().includes(q) ||
-        (c.account_number   || "").toLowerCase().includes(q) ||
-        (c.exception_type   || "").toLowerCase().includes(q) ||
-        (c.gt_final_routing || "").toLowerCase().includes(q)
+        (c.exception_id   || "").toLowerCase().includes(q) ||
+        (c.account_number || "").toLowerCase().includes(q) ||
+        (c.exception_type || "").toLowerCase().includes(q)
       );
     });
-  }, [cases, query, routing]);
+  }, [cases, runs, query, statusFilter]);
 
   return (
     <div className="case-list">
@@ -44,12 +45,12 @@ export default function CaseList({ onSelect, selectedId }) {
       />
 
       <div className="case-filters">
-        {ROUTING_FILTERS.map((f) => (
+        {STATUS_FILTERS.map((f) => (
           <button
             key={f.key}
             type="button"
-            className={`filter-pill ${routing === f.key ? "active" : ""}`}
-            onClick={() => setRouting(f.key)}
+            className={`filter-pill ${statusFilter === f.key ? "active" : ""}`}
+            onClick={() => setStatusFilter(f.key)}
           >
             {f.label}
           </button>
@@ -63,19 +64,26 @@ export default function CaseList({ onSelect, selectedId }) {
       {error && <p className="error">{error}</p>}
 
       <ul>
-        {filtered.map((c) => (
-          <li
-            key={c.exception_id}
-            className={c.exception_id === selectedId ? "case-row selected" : "case-row"}
-            onClick={() => onSelect(c)}
-          >
-            <div className="case-id">{c.exception_id}</div>
-            <div className="case-meta">
-              {c.exception_type}
-              {c.gt_final_routing && <span className={`gt-chip gt-${(c.gt_final_routing || "").toLowerCase()}`}>{c.gt_final_routing}</span>}
-            </div>
-          </li>
-        ))}
+        {filtered.map((c) => {
+          const outcome = outcomeOf(runs[c.exception_id]);
+          return (
+            <li
+              key={c.exception_id}
+              className={c.exception_id === selectedId ? "case-row selected" : "case-row"}
+              onClick={() => onSelect(c)}
+            >
+              <div className="case-id">{c.exception_id}</div>
+              <div className="case-meta">
+                {c.exception_type}
+                {outcome && (
+                  <span className={`result-chip result-${outcome}`}>
+                    {outcome === "workable" ? "Workable" : outcome === "unworkable" ? "Unworkable" : "Processed"}
+                  </span>
+                )}
+              </div>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
