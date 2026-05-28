@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import useChat from "../hooks/useChat.js";
 
-export default function ChatPanel({ caseId, stateSnapshot }) {
+export default function ChatPanel({ caseId, stateSnapshot, isOpen, onClose }) {
   const ready = !!stateSnapshot?.result;
   const { messages, status, send } = useChat({ caseId, stateSnapshot });
   const [input, setInput] = useState("");
@@ -39,12 +39,20 @@ export default function ChatPanel({ caseId, stateSnapshot }) {
   };
 
   return (
-    <aside className="chat-panel">
+    <aside className={`chat-panel${isOpen ? " chat-panel-open" : ""}`}>
       <div className="chat-header">
-        <div className="chat-title">Bill Exceptions Assistant</div>
-        <div className="chat-subtitle">
-          {ready ? "Ask about this case" : "Run screening to start a conversation"}
+        <div className="chat-header-text">
+          <div className="chat-title">Bill Exceptions Assistant</div>
+          <div className="chat-subtitle">
+            {ready ? "Ask about this case" : "Run screening to start a conversation"}
+          </div>
         </div>
+        <button className="chat-close" onClick={onClose} aria-label="Close chat">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
       </div>
 
       <div className="chat-messages" ref={scrollRef}>

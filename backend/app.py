@@ -18,8 +18,8 @@ app = FastAPI()
 
 
 @app.get("/cases")
-def get_cases():
-    return get_cases_list()
+def get_cases(page: int = 1, page_size: int = 20, search: str = ""):
+    return get_cases_list(page=page, page_size=page_size, search=search)
 
 
 @app.post("/screen")

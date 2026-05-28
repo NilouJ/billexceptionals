@@ -1,4 +1,4 @@
-.app { display: grid; grid-template-columns: 280px 1fr 380px; height: 100vh; }
+.app { display: grid; grid-template-columns: 280px 1fr; height: 100vh; }
 
 .sidebar {
   background: var(--panel);
@@ -157,6 +157,32 @@
 .filter-pill.active { background: var(--accent); color: white; border-color: var(--accent); }
 
 .case-count { font-size: 11px; color: var(--muted); margin-bottom: 8px; }
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+.page-btn {
+  min-width: 28px;
+  height: 28px;
+  padding: 0 6px;
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--panel-2);
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+}
+.page-btn:hover:not(:disabled) { background: var(--panel-3, var(--panel-2)); color: inherit; }
+.page-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+.page-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+.page-ellipsis { font-size: 12px; color: var(--muted); padding: 0 2px; }
 
 .result-chip {
   font-size: 9px;
@@ -356,22 +382,81 @@
 .final-raw summary { cursor: pointer; color: var(--muted); font-size: 12px; }
 .final-raw pre { background: var(--panel-2); padding: 12px; border-radius: 8px; overflow-x: auto; font-size: 11px; }
 
+/* ─── Chat FAB ─────────────────────────────────────────────────────────────── */
+.chat-fab {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 200;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  border: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+  transition: background 0.15s, transform 0.15s;
+}
+.chat-fab:hover { background: var(--accent-dark); transform: scale(1.07); }
+.chat-fab-active { background: var(--accent-dark); }
+
 /* ─── Chat panel ───────────────────────────────────────────────────────────── */
 .chat-panel {
+  position: fixed;
+  bottom: 92px;
+  right: 28px;
+  width: 360px;
+  height: 520px;
   background: var(--panel);
-  border-left: 1px solid var(--border);
+  border: 1px solid var(--border);
+  border-radius: 16px;
   display: flex;
   flex-direction: column;
-  height: 100vh;
   overflow: hidden;
+  z-index: 150;
+  transform: scale(0.92) translateY(16px);
+  transform-origin: bottom right;
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.22);
 }
+.chat-panel.chat-panel-open {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
 .chat-header {
-  padding: 18px 20px 14px 20px;
+  padding: 16px 16px 14px 20px;
   border-bottom: 1px solid var(--border);
   background: var(--panel);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
 }
+.chat-header-text { flex: 1; min-width: 0; }
 .chat-title { font-weight: 700; font-size: 14px; color: var(--text); }
 .chat-subtitle { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.chat-close {
+  flex-shrink: 0;
+  background: transparent;
+  border: 0;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s, background 0.15s;
+}
+.chat-close:hover { color: var(--text); background: var(--panel-2); }
 
 .chat-messages {
   flex: 1;
@@ -546,3 +631,30 @@
 }
 .case-pack-grid dt { color: var(--muted); }
 .case-pack-grid dd { margin: 0; color: var(--text); }
+
+
+/* At end of App.css */
+@media (max-width: 1100px) {
+  .app { grid-template-columns: 260px 1fr; }
+}
+@media (max-width: 600px) {
+  .chat-panel { width: calc(100vw - 24px); right: 12px; height: 70vh; }
+  .chat-fab { right: 16px; bottom: 16px; }
+}
+
+@media (max-width: 768px) {
+  .app { grid-template-columns: 1fr; }
+  .sidebar { display: none; } /* or slide-in drawer */
+  .pipeline { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 480px) {
+  .pipeline { grid-template-columns: 1fr; }
+  .main { padding: 16px; }
+}
+
+.pipeline {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+}
