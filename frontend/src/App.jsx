@@ -1,10 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import CaseList from "./components/CaseList.jsx";
 import CaseDetails from "./components/CaseDetails.jsx";
-import AgentPipeline from "./components/AgentPipeline.jsx";
-import TraceLog from "./components/TraceLog.jsx";
-import FinalResult from "./components/FinalResult.jsx";
-import FeedbackForm from "./components/FeedbackForm.jsx";
+import ScreeningLoader from "./components/ScreeningLoader.jsx";
+import ScreeningStages from "./components/ScreeningStages.jsx";
 import ChatPanel from "./components/ChatPanel.jsx";
 import BatchDashboard from "./components/BatchDashboard.jsx";
 import useScreening from "./hooks/useScreening.js";
@@ -209,10 +207,20 @@ export default function App() {
         </header>
 
         <CaseDetails caseData={selectedCase} />
-        <AgentPipeline agents={agents} />
-        <TraceLog trace={trace} />
-        {result && <FinalResult result={result} />}
-        {result && selectedCase && <FeedbackForm caseId={selectedCase.exception_id} result={result} />}
+
+        {status === "running" && agents.every((a) => a.status === "pending") && (
+          <ScreeningLoader caseId={selectedCase?.case_id ?? selectedCase?.exception_id} />
+        )}
+
+        {(status !== "idle" && !agents.every((a) => a.status === "pending")) && (
+          <ScreeningStages
+            agents={agents}
+            trace={trace}
+            result={result}
+            status={status}
+            caseId={selectedCase?.case_id ?? selectedCase?.exception_id}
+          />
+        )}
       </main>
 
       <ChatPanel

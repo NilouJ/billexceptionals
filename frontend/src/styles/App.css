@@ -793,3 +793,402 @@
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap: 12px;
 }
+
+/* ─── ScreeningLoader ──────────────────────────────────────────────────────── */
+.screening-loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 32px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  margin-bottom: 16px;
+  text-align: center;
+}
+.loader-content { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.loader-spinner {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.spinner-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  animation: spin 0.9s linear infinite;
+}
+.spinner-icon { font-size: 26px; position: relative; z-index: 1; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.loader-title { font-size: 16px; font-weight: 700; margin: 0; }
+.loader-subtitle { font-size: 13px; color: var(--muted); margin: 0; }
+.loader-case {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-soft);
+  padding: 3px 10px;
+  border-radius: 999px;
+  letter-spacing: 0.3px;
+}
+
+/* ─── ScreeningProgress ────────────────────────────────────────────────────── */
+.screening-progress {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 16px;
+}
+.progress-dots {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+.progress-step { display: flex; align-items: center; }
+.progress-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--panel-2);
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  position: relative;
+  transition: background 0.2s, border-color 0.2s;
+}
+.dot-done { background: var(--ok); border-color: var(--ok); color: white; }
+.dot-active { border-color: var(--accent); animation: pulse 1.4s ease-in-out infinite; }
+.dot-check { color: white; font-size: 13px; }
+.dot-pulse {
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  opacity: 0.5;
+  animation: dot-ping 1s ease-out infinite;
+}
+@keyframes dot-ping {
+  0%   { transform: scale(1);    opacity: 0.5; }
+  100% { transform: scale(1.5);  opacity: 0; }
+}
+.progress-line {
+  width: 32px;
+  height: 2px;
+  background: var(--border);
+  transition: background 0.2s;
+}
+.line-done { background: var(--ok); }
+.progress-label { font-size: 12px; color: var(--muted); }
+
+/* ─── ScreeningStages ──────────────────────────────────────────────────────── */
+.screening-stages {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+/* Stage navigation tabs */
+.stage-nav {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel-2);
+  padding: 12px 16px;
+  gap: 0;
+}
+.stage-nav-item { display: flex; align-items: center; flex: 1; }
+.stage-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: transparent;
+  border: 0;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-family: inherit;
+  text-align: left;
+  transition: background 0.15s, color 0.15s;
+  width: 100%;
+}
+.stage-btn:hover:not(:disabled):not(.stage-btn-locked) { background: var(--panel); color: var(--text); }
+.stage-btn-active { color: var(--accent) !important; background: var(--panel) !important; }
+.stage-btn-complete { color: var(--ok) !important; }
+.stage-btn-locked { cursor: not-allowed; opacity: 0.45; }
+.stage-num {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--border);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.2s, color 0.2s;
+}
+.stage-btn-active .stage-num { background: var(--accent); color: white; }
+.stage-btn-complete .stage-num { background: var(--ok); color: white; }
+.stage-info { display: flex; flex-direction: column; gap: 1px; }
+.stage-label { font-size: 13px; font-weight: 600; line-height: 1.2; }
+.stage-hint { font-size: 11px; color: var(--muted); }
+.stage-hint-required {
+  color: var(--accent);
+  font-weight: 600;
+}
+.stage-connector {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+  margin: 0 4px;
+  max-width: 40px;
+}
+.connector-active { background: var(--accent); opacity: 0.3; }
+
+/* Stage content area */
+.stage-content { padding: 20px; }
+.stage-body { display: flex; flex-direction: column; gap: 16px; }
+.stage-section-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--muted);
+  margin: 0 0 8px 0;
+}
+
+/* Running banner */
+.stage-running-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--accent-soft);
+  border: 1px solid rgba(255, 97, 36, 0.2);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+}
+.running-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: batch-pulse 1.4s ease-out infinite;
+  flex-shrink: 0;
+}
+
+/* Stage trace */
+.stage-trace { margin-top: 4px; }
+.trace-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+.trace-arrow { color: var(--muted); margin: 0 4px; }
+
+/* Advance button */
+.stage-advance-row { display: flex; justify-content: flex-end; padding-top: 8px; }
+.stage-advance-btn {
+  background: var(--accent);
+  color: white;
+  border: 0;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 13px;
+  transition: background 0.15s;
+}
+.stage-advance-btn:hover { background: var(--accent-dark); }
+
+/* ─── Stage 2: Recommendation ─────────────────────────────────────────────── */
+.rec-hero {
+  border-radius: 10px;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.tone-success { background: rgba(22, 163, 74, 0.08); border: 1px solid rgba(22, 163, 74, 0.2); }
+.tone-warning { background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.2); }
+.rec-badge {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--muted);
+}
+.tone-success .rec-badge { color: var(--ok); }
+.tone-warning .rec-badge { color: var(--warn); }
+.rec-title { font-size: 18px; font-weight: 700; margin: 0; letter-spacing: -0.2px; }
+.rec-desc { font-size: 13px; color: var(--muted); margin: 0; line-height: 1.5; }
+
+/* Context row (scenario + SOP) */
+.rec-context {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+.context-row { display: flex; align-items: baseline; gap: 12px; font-size: 13px; }
+.context-label { color: var(--muted); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px; min-width: 56px; }
+.context-value { color: var(--text); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.scenario-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  letter-spacing: 0.4px;
+}
+
+/* Task list (what to do) */
+.rec-tasks { background: var(--panel-2); border: 1px solid var(--border); border-radius: 8px; padding: 14px; }
+.task-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+.task-item { display: flex; gap: 12px; align-items: flex-start; font-size: 13px; line-height: 1.45; }
+.task-number {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.task-text { flex: 1; }
+
+/* Expandable detail sections */
+.rec-expandable { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.detail-toggle {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--panel-2);
+  border: 0;
+  padding: 11px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+.detail-toggle:hover { background: var(--panel); }
+.toggle-icon { color: var(--muted); font-size: 11px; }
+.detail-content { padding: 12px 14px; border-top: 1px solid var(--border); }
+.detail-list { list-style: disc; padding-left: 18px; margin: 0 0 8px 0; }
+.detail-list li { margin: 4px 0; font-size: 13px; line-height: 1.4; }
+.detail-rationale { font-size: 13px; margin: 8px 0 0 0; line-height: 1.5; color: var(--text); }
+.detail-next-action { font-size: 13px; margin: 8px 0 0 0; line-height: 1.5; color: var(--text); }
+.sop-steps-list { padding-left: 18px; margin: 0; }
+.sop-steps-list li { margin: 4px 0; font-size: 13px; line-height: 1.4; }
+.detail-grid { display: grid; grid-template-columns: 140px 1fr; gap: 4px 14px; font-size: 12px; }
+.detail-row { display: contents; }
+.detail-row dt { color: var(--muted); text-transform: capitalize; }
+.detail-row dd { margin: 0; color: var(--text); word-break: break-word; }
+
+/* ─── Stage 3: Human Review ───────────────────────────────────────────────── */
+.review-intro { padding-bottom: 4px; }
+.review-intro-title { font-size: 16px; font-weight: 700; margin: 0 0 6px 0; }
+.review-intro-desc { font-size: 13px; color: var(--muted); margin: 0; line-height: 1.5; }
+
+.review-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.review-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 16px 12px;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  background: var(--panel-2);
+  cursor: pointer;
+  font-family: inherit;
+  text-align: center;
+  transition: border-color 0.15s, background 0.15s;
+}
+.review-option:hover { border-color: var(--accent); background: var(--panel); }
+.review-option.selected.agree { border-color: var(--ok); background: rgba(22, 163, 74, 0.06); }
+.review-option.selected.disagree { border-color: var(--warn); background: rgba(245, 158, 11, 0.06); }
+.option-icon { font-size: 20px; }
+.option-label { font-size: 14px; font-weight: 700; }
+.option-desc { font-size: 11px; color: var(--muted); }
+
+.review-notes-wrap { display: flex; flex-direction: column; gap: 6px; }
+.review-notes-label { font-size: 12px; font-weight: 600; color: var(--text); }
+.review-notes {
+  width: 100%;
+  background: var(--panel-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 13px;
+  font-family: inherit;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.review-notes:focus { border-color: var(--accent); }
+
+.submit-review {
+  background: var(--accent);
+  color: white;
+  border: 0;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 14px;
+  transition: background 0.15s;
+  align-self: flex-start;
+}
+.submit-review:hover:not(:disabled) { background: var(--accent-dark); }
+.submit-review:disabled { opacity: 0.45; cursor: not-allowed; }
+.review-hint { font-size: 12px; color: var(--warn); margin: 0; }
+
+/* Submitted confirmation */
+.stage-submitted {
+  align-items: center;
+  text-align: center;
+  padding: 40px 20px;
+  gap: 12px;
+}
+.submitted-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(22, 163, 74, 0.12);
+  color: var(--ok);
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+.stage-submitted h3 { font-size: 16px; font-weight: 700; margin: 0; }
+.stage-submitted p { font-size: 13px; color: var(--muted); margin: 0; }
