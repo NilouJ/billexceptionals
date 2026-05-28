@@ -23,6 +23,11 @@ def _read(filename):
         return list(csv.DictReader(f))
 
 
+def get_all_cases():
+    """Return every exception case as a flat list — used by the batch screening endpoint."""
+    return _read("origin_exceptions.csv")
+
+
 def get_cases_list(page: int = 1, page_size: int = 20, search: str = ""):
     """Return a paginated slice of exception cases for the /cases endpoint."""
     rows = _read("origin_exceptions.csv")

@@ -31,7 +31,7 @@ from tools import (
 )
 
 
-def _trace(state, agent_key, decision, rule_hits=None, reasons=None, evidence=None):
+def _trace(state, agent_key, decision, rule_hits=None, reasons=None, evidence=None, checks=None):
     rule_hits = rule_hits or []
     if not reasons:
         reasons = [h["reason"] for h in rule_hits]
@@ -42,7 +42,22 @@ def _trace(state, agent_key, decision, rule_hits=None, reasons=None, evidence=No
         "reasons":   reasons,
         "rule_hits": rule_hits,
         "evidence":  evidence or {},
+        "checks":    checks or [],
     })
+
+
+def _verify(checks, rule_hits, rule_id, label, failed, fail_reason=None):
+    """
+    Record one verification result. If `failed` is truthy, also append a rule_hit
+    using `fail_reason` (or `label` if no reason is given). Keeps each check's
+    pass/fail visible to the UI for the green-tick / red-cross display.
+    """
+    if failed:
+        reason = fail_reason or label
+        checks.append({"rule_id": rule_id, "label": label, "passed": False, "reason": reason})
+        rule_hits.append({"rule_id": rule_id, "reason": reason})
+    else:
+        checks.append({"rule_id": rule_id, "label": label, "passed": True})
 
 
 # ── Agent 1: Case Intake & Triage ──────────────────────────────────────────────
@@ -55,6 +70,7 @@ def case_intake_triage_agent(state):
     state["context"]["account"] = account
 
     rule_hits = []
+    checks    = []
     evidence  = {
         "status":           account.get("status"),
         "isOnSupply":       account.get("isOnSupply"),
@@ -64,38 +80,45 @@ def case_intake_triage_agent(state):
         "pinned_hold":      False,
     }
 
-    if account.get("status") in ("SUSPENDED", "CANCELLED"):
-        rule_hits.append({
-            "rule_id": "R01-01",
-            "reason":  f"Account status is {account['status']} — cannot bill.",
-        })
+    status = account.get("status")
+    _verify(
+        checks, rule_hits, "R01-01",
+        "Account status active",
+        failed=status in ("SUSPENDED", "CANCELLED"),
+        fail_reason=f"Account status is {status} — cannot bill.",
+    )
 
-    if not account.get("isOnSupply", True):
-        rule_hits.append({
-            "rule_id": "R01-02",
-            "reason":  "Account is not on supply.",
-        })
+    _verify(
+        checks, rule_hits, "R01-02",
+        "Account on supply",
+        failed=not account.get("isOnSupply", True),
+        fail_reason="Account is not on supply.",
+    )
 
-    if account.get("isShellAccount", False):
-        rule_hits.append({
-            "rule_id": "R01-03",
-            "reason":  "Shell account — no real customer.",
-        })
+    _verify(
+        checks, rule_hits, "R01-03",
+        "Real customer account",
+        failed=account.get("isShellAccount", False),
+        fail_reason="Shell account — no real customer.",
+    )
 
-    if account.get("meterPointStatus") == "OFF_SUPPLY":
-        rule_hits.append({
-            "rule_id": "R01-04",
-            "reason":  "Meter point status is OFF_SUPPLY.",
-        })
+    _verify(
+        checks, rule_hits, "R01-04",
+        "Meter point on supply",
+        failed=account.get("meterPointStatus") == "OFF_SUPPLY",
+        fail_reason="Meter point status is OFF_SUPPLY.",
+    )
 
     complaints    = account.get("complaints", [])
     open_official = [c for c in complaints if c.get("isOfficial") and not c.get("resolutionDate")]
     if open_official:
         evidence["open_ombudsman"] = True
-        rule_hits.append({
-            "rule_id": "R01-05",
-            "reason":  f"Active Ombudsman complaint open since {open_official[0]['creationDate']}.",
-        })
+    _verify(
+        checks, rule_hits, "R01-05",
+        "No open Ombudsman complaint",
+        failed=bool(open_official),
+        fail_reason=(f"Active Ombudsman complaint open since {open_official[0]['creationDate']}." if open_official else None),
+    )
 
     HOLD_KEYWORDS = ["do not bill", "billing hold", "billing suspension", "pending dispute"]
     notes = account.get("notes", [])
@@ -105,16 +128,20 @@ def case_intake_triage_agent(state):
     ]
     if pinned_holds:
         evidence["pinned_hold"] = True
-        rule_hits.append({
-            "rule_id": "R01-06",
-            "reason":  f"Pinned billing hold note: '{pinned_holds[0]['body'][:60]}'.",
-        })
+    _verify(
+        checks, rule_hits, "R01-06",
+        "No pinned billing-hold note",
+        failed=bool(pinned_holds),
+        fail_reason=(f"Pinned billing hold note: '{pinned_holds[0]['body'][:60]}'." if pinned_holds else None),
+    )
 
     if rule_hits:
-        _trace(state, "case_intake_triage", "RETURN_TO_ONSHORE_EXCLUDED", rule_hits=rule_hits, evidence=evidence)
+        _trace(state, "case_intake_triage", "RETURN_TO_ONSHORE_EXCLUDED",
+               rule_hits=rule_hits, evidence=evidence, checks=checks)
         state["context"]["triage_excluded"] = True
     else:
-        _trace(state, "case_intake_triage", "PROCEED", reasons=["All triage checks passed."], evidence=evidence)
+        _trace(state, "case_intake_triage", "PROCEED",
+               reasons=["All triage checks passed."], evidence=evidence, checks=checks)
         state["context"]["triage_excluded"] = False
 
     return state
@@ -131,6 +158,7 @@ def precheck_agent(state):
     state["context"]["metering"] = metering
 
     rule_hits = []
+    checks    = []
     evidence  = {
         "isInHardship":          account.get("isInHardship"),
         "hasLifeSupport":        False,
@@ -142,45 +170,57 @@ def precheck_agent(state):
     }
 
     users = account.get("users", [])
-    if [u for u in users if u.get("isDeceased") == "True"]:
-        rule_hits.append({
-            "rule_id": "R02-01",
-            "reason":  "Customer is deceased — cannot proceed with billing.",
-        })
-
-    if [u for u in users if u.get("hasLifeSupport") == "True"]:
+    deceased_users     = [u for u in users if u.get("isDeceased") == "True"]
+    life_support_users = [u for u in users if u.get("hasLifeSupport") == "True"]
+    if life_support_users:
         evidence["hasLifeSupport"] = True
-        rule_hits.append({
-            "rule_id": "R02-02",
-            "reason":  "Life support equipment registered — special handling required.",
-        })
-
     if account.get("isInHardship"):
         evidence["hasActiveHardship"] = True
-        rule_hits.append({
-            "rule_id": "R02-03",
-            "reason":  "Customer flagged as in financial hardship — billing on hold pending review.",
-        })
+
+    _verify(
+        checks, rule_hits, "R02-01",
+        "Customer is alive",
+        failed=bool(deceased_users),
+        fail_reason="Customer is deceased — cannot proceed with billing.",
+    )
+
+    _verify(
+        checks, rule_hits, "R02-02",
+        "No life-support equipment flag",
+        failed=bool(life_support_users),
+        fail_reason="Life support equipment registered — special handling required.",
+    )
+
+    _verify(
+        checks, rule_hits, "R02-03",
+        "Not in financial hardship",
+        failed=bool(account.get("isInHardship")),
+        fail_reason="Customer flagged as in financial hardship — billing on hold pending review.",
+    )
 
     zero_days = metering.get("consecutive_zero_days", 0)
-    if zero_days >= 5:
-        rule_hits.append({
-            "rule_id": "R02-05",
-            "reason":  f"Communication failure — {zero_days} consecutive days with zero consumption.",
-        })
+    _verify(
+        checks, rule_hits, "R02-05",
+        "Consistent meter reads",
+        failed=zero_days >= 5,
+        fail_reason=f"Communication failure — {zero_days} consecutive days with zero consumption.",
+    )
 
     missing_pct = metering.get("missing_pct", 0)
-    if missing_pct > 50:
-        rule_hits.append({
-            "rule_id": "R02-06",
-            "reason":  f"High MISSING reads — {missing_pct:.0f}% of reads have no data.",
-        })
+    _verify(
+        checks, rule_hits, "R02-06",
+        "Read coverage above 50%",
+        failed=missing_pct > 50,
+        fail_reason=f"High MISSING reads — {missing_pct:.0f}% of reads have no data.",
+    )
 
     if rule_hits:
-        _trace(state, "precheck", "RETURN_TO_ONSHORE_BLOCKED", rule_hits=rule_hits, evidence=evidence)
+        _trace(state, "precheck", "RETURN_TO_ONSHORE_BLOCKED",
+               rule_hits=rule_hits, evidence=evidence, checks=checks)
         state["context"]["precheck_blocked"] = True
     else:
-        _trace(state, "precheck", "PROCEED", reasons=["All pre-check validations passed."], evidence=evidence)
+        _trace(state, "precheck", "PROCEED",
+               reasons=["All pre-check validations passed."], evidence=evidence, checks=checks)
         state["context"]["precheck_blocked"] = False
 
     return state
@@ -201,6 +241,7 @@ def groundrule_agent(state):
     state["context"]["service_orders"] = service_orders
 
     rule_hits = []
+    checks    = []
     evidence  = {
         "agreement_status":     agreement.get("status"),
         "agreement_valid_to":   agreement.get("valid_to"),
@@ -210,12 +251,14 @@ def groundrule_agent(state):
         "active_leave_process": False,
     }
 
-    if not agreement:
-        rule_hits.append({
-            "rule_id": "R03-01",
-            "reason":  "No tariff agreement found for this account.",
-        })
-    else:
+    _verify(
+        checks, rule_hits, "R03-01",
+        "Tariff agreement exists",
+        failed=not agreement,
+        fail_reason="No tariff agreement found for this account.",
+    )
+
+    if agreement:
         bp_start      = case.get("billing_period_start", "")
         valid_from    = agreement.get("valid_from", "")
         valid_to      = agreement.get("valid_to", "") or ""
@@ -225,59 +268,66 @@ def groundrule_agent(state):
         expired      = (valid_to and valid_to < bp_start) if valid_to else False
         terminated   = (terminated_at and terminated_at < bp_end) if terminated_at and bp_end else False
 
-        if before_start:
-            rule_hits.append({
-                "rule_id": "R03-02",
-                "reason":  f"Agreement only starts {valid_from} — does not cover billing period start {bp_start}.",
-            })
-        if expired:
-            rule_hits.append({
-                "rule_id": "R03-03",
-                "reason":  f"Agreement expired {valid_to} — before billing period start {bp_start}.",
-            })
-        if terminated:
-            rule_hits.append({
-                "rule_id": "R03-03",
-                "reason":  f"Agreement terminated {terminated_at} — before billing period end {bp_end}.",
-            })
+        _verify(
+            checks, rule_hits, "R03-02",
+            "Agreement covers billing period start",
+            failed=before_start,
+            fail_reason=f"Agreement only starts {valid_from} — does not cover billing period start {bp_start}.",
+        )
+        _verify(
+            checks, rule_hits, "R03-03",
+            "Agreement not expired before billing period",
+            failed=bool(expired),
+            fail_reason=f"Agreement expired {valid_to} — before billing period start {bp_start}.",
+        )
+        _verify(
+            checks, rule_hits, "R03-03",
+            "Agreement not terminated before billing period end",
+            failed=bool(terminated),
+            fail_reason=f"Agreement terminated {terminated_at} — before billing period end {bp_end}.",
+        )
 
-    if metering.get("meter_status") not in ("ACTIVE", None, ""):
-        rule_hits.append({
-            "rule_id": "R03-04",
-            "reason":  f"Meter status is {metering.get('meter_status')} — not ACTIVE.",
-        })
+    _verify(
+        checks, rule_hits, "R03-04",
+        "Meter status ACTIVE",
+        failed=metering.get("meter_status") not in ("ACTIVE", None, ""),
+        fail_reason=f"Meter status is {metering.get('meter_status')} — not ACTIVE.",
+    )
 
     active_orders = [o for o in service_orders if o.get("status") in ("PENDING", "IN_PROGRESS")]
     if active_orders:
         evidence["active_leave_process"] = True
-        o   = active_orders[0]
-        rid = "R03-05" if o.get("process_type") == "MOVE_OUT" else "R03-06"
-        rule_hits.append({
-            "rule_id": rid,
-            "reason":  f"Active {o.get('process_type')} process — status {o.get('status')}.",
-        })
+    active_order = active_orders[0] if active_orders else None
+    active_rule_id = "R03-05" if (active_order and active_order.get("process_type") == "MOVE_OUT") else "R03-06"
+    _verify(
+        checks, rule_hits, active_rule_id,
+        "No active move-out / leave process",
+        failed=bool(active_orders),
+        fail_reason=(f"Active {active_order.get('process_type')} process — status {active_order.get('status')}."
+                     if active_order else None),
+    )
 
     # PMD checks — proposal §2.3 GR-01 / GR-02 / GR-04
     pmd_requests = get_pmd_requests(acct_no)
     state["context"]["pmd_requests"] = pmd_requests
     evidence["pmd_request_count"] = len(pmd_requests)
 
-    if pmd_requests:
-        # GR-02 (R03-08): Rate Tariff Issue PMD takes precedence in the trace
-        tariff_pmds = [p for p in pmd_requests if p.get("type") == "RATE_TARIFF_ISSUE"]
-        general_pmds = [p for p in pmd_requests if p.get("type") != "RATE_TARIFF_ISSUE"]
-        if tariff_pmds:
-            p = tariff_pmds[0]
-            rule_hits.append({
-                "rule_id": "R03-08",
-                "reason":  f"Active PMD raised {p.get('raised_date')} for Rate Tariff Issue — onshore tariff team owns resolution.",
-            })
-        if general_pmds and not tariff_pmds:
-            p = general_pmds[0]
-            rule_hits.append({
-                "rule_id": "R03-07",
-                "reason":  f"PMD request already raised on {p.get('raised_date')} (status {p.get('status')}) — case is in-flight onshore.",
-            })
+    tariff_pmds  = [p for p in pmd_requests if p.get("type") == "RATE_TARIFF_ISSUE"]
+    general_pmds = [p for p in pmd_requests if p.get("type") != "RATE_TARIFF_ISSUE"]
+    _verify(
+        checks, rule_hits, "R03-08",
+        "No active rate-tariff PMD",
+        failed=bool(tariff_pmds),
+        fail_reason=(f"Active PMD raised {tariff_pmds[0].get('raised_date')} for Rate Tariff Issue — onshore tariff team owns resolution."
+                     if tariff_pmds else None),
+    )
+    _verify(
+        checks, rule_hits, "R03-07",
+        "No prior PMD already raised",
+        failed=bool(general_pmds and not tariff_pmds),
+        fail_reason=(f"PMD request already raised on {general_pmds[0].get('raised_date')} (status {general_pmds[0].get('status')}) — case is in-flight onshore."
+                     if (general_pmds and not tariff_pmds) else None),
+    )
 
     # OOC threshold — proposal §2.3 GR-08
     if case.get("exception_type") == "OUT_OF_CODE":
@@ -287,17 +337,20 @@ def groundrule_agent(state):
         except (TypeError, ValueError):
             ooc_amount = 0
         evidence["ooc_amount"] = ooc_amount
-        if ooc_amount > 5000:
-            rule_hits.append({
-                "rule_id": "R03-10",
-                "reason":  f"OOC credit amount ${ooc_amount:,} exceeds the $5,000 threshold — onshore approval required.",
-            })
+        _verify(
+            checks, rule_hits, "R03-10",
+            "OOC amount within $5,000 threshold",
+            failed=ooc_amount > 5000,
+            fail_reason=f"OOC credit amount ${ooc_amount:,} exceeds the $5,000 threshold — onshore approval required.",
+        )
 
     if rule_hits:
-        _trace(state, "groundrule", "RETURN_TO_ONSHORE_UNWORKABLE", rule_hits=rule_hits, evidence=evidence)
+        _trace(state, "groundrule", "RETURN_TO_ONSHORE_UNWORKABLE",
+               rule_hits=rule_hits, evidence=evidence, checks=checks)
         state["context"]["groundrule_unworkable"] = True
     else:
-        _trace(state, "groundrule", "WORKABLE", reasons=["Case is workable — agreement and meter valid."], evidence=evidence)
+        _trace(state, "groundrule", "WORKABLE",
+               reasons=["Case is workable — agreement and meter valid."], evidence=evidence, checks=checks)
         state["context"]["groundrule_unworkable"] = False
 
     return state
@@ -335,7 +388,16 @@ def sop_context_agent(state):
         "sops_retrieved":  len(scenario["sop"]["key_steps"]),
     }
 
-    if scenario["sop"]["key_steps"]:
+    has_sop = bool(scenario["sop"]["key_steps"])
+    checks  = [
+        {"rule_id": "R04-S1", "label": "Scenario classified", "passed": True},
+        ({"rule_id": "R04-01", "label": "SOP available for scenario", "passed": True}
+         if has_sop
+         else {"rule_id": "R04-01", "label": "SOP available for scenario", "passed": False,
+               "reason": f"No SOP defined for scenario {scenario_code} — flagging for human review."}),
+    ]
+
+    if has_sop:
         confidence_note = "" if data_available else " (type-default — signal data not in this prototype)"
         _trace(
             state,
@@ -343,6 +405,7 @@ def sop_context_agent(state):
             "CONTEXT_ASSEMBLED",
             reasons=[f"Classified as {scenario_code}: {scenario['title']}{confidence_note}. SOP {scenario['sop']['id']} retrieved."],
             evidence=evidence,
+            checks=checks,
         )
     else:
         state["context"]["sop_gap"] = True
@@ -355,6 +418,7 @@ def sop_context_agent(state):
                 "reason":  f"No SOP defined for scenario {scenario_code} — flagging for human review.",
             }],
             evidence=evidence,
+            checks=checks,
         )
 
     return state
@@ -406,12 +470,27 @@ def case_screening_outcome_agent(state):
         "case_pack":      assemble_case_pack(state, recommendation, summary),
     }
 
+    # Synthesised summary checks — mirror the upstream gates so the analyst can see
+    # at a glance which stages cleared. Failures here are summaries; the rule_ids
+    # that fired live on the originating agent's card.
+    outcome_checks = [
+        {"rule_id": "S1", "label": "Triage cleared",       "passed": not context.get("triage_excluded"),
+         **({"reason": "Excluded at triage."}             if context.get("triage_excluded")     else {})},
+        {"rule_id": "S2", "label": "Pre-check cleared",    "passed": not context.get("precheck_blocked"),
+         **({"reason": "Blocked at pre-check."}           if context.get("precheck_blocked")    else {})},
+        {"rule_id": "S3", "label": "Ground-rule cleared",  "passed": not context.get("groundrule_unworkable"),
+         **({"reason": "Unworkable at ground-rule."}      if context.get("groundrule_unworkable") else {})},
+        {"rule_id": "S4", "label": "SOP context resolved", "passed": not context.get("sop_gap"),
+         **({"reason": "No SOP for classified scenario."} if context.get("sop_gap")             else {})},
+    ]
+
     _trace(
         state,
         "screening_outcome",
         recommendation,
         reasons=[summary],
         evidence={"final_recommendation": recommendation},
+        checks=outcome_checks,
     )
 
     return state

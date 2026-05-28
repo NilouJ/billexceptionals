@@ -118,6 +118,102 @@
 .btn-primary:hover:not(:disabled) { background: var(--accent-dark); }
 .btn-primary:disabled { opacity: 0.45; cursor: not-allowed; }
 
+.header-actions { display: flex; gap: 10px; align-items: center; }
+.btn-secondary {
+  background: var(--panel-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.1px;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+.btn-secondary:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+.btn-secondary:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.batch-progress {
+  position: relative;
+  margin: 0 16px 14px 16px;
+  height: 6px;
+  background: var(--panel-2);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.batch-progress-bar {
+  position: relative;
+  height: 100%;
+  background: var(--accent);
+  border-radius: 999px;
+  transition: width 0.35s cubic-bezier(0.4, 0.0, 0.2, 1);
+  overflow: hidden;
+}
+/* Determinate: shimmer sweeps left-to-right across the filled portion */
+.batch-progress-bar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.55) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: translateX(-100%);
+  animation: batch-shimmer 1.4s linear infinite;
+}
+/* Indeterminate: full-width track, accent slug slides back and forth */
+.batch-progress-indeterminate .batch-progress-bar {
+  width: 40% !important;
+  animation: batch-indeterminate 1.4s ease-in-out infinite;
+}
+.batch-progress-indeterminate .batch-progress-bar::after { display: none; }
+
+@keyframes batch-shimmer {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+@keyframes batch-indeterminate {
+  0%   { transform: translateX(-100%); }
+  50%  { transform: translateX(150%); }
+  100% { transform: translateX(-100%); }
+}
+
+/* Pulsing dot in dashboard header while batching */
+.batch-live-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 0 rgba(255, 97, 36, 0.6);
+  animation: batch-pulse 1.4s ease-out infinite;
+}
+@keyframes batch-pulse {
+  0%   { box-shadow: 0 0 0 0    rgba(255, 97, 36, 0.55); }
+  70%  { box-shadow: 0 0 0 10px rgba(255, 97, 36, 0); }
+  100% { box-shadow: 0 0 0 0    rgba(255, 97, 36, 0); }
+}
+
+/* Spinner inside the Run Batch button */
+.btn-spinner {
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  margin-right: 8px;
+  vertical-align: -2px;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-top-color: transparent;
+  animation: btn-spin 0.75s linear infinite;
+}
+@keyframes btn-spin {
+  to { transform: rotate(360deg); }
+}
+
 .case-list ul { list-style: none; padding: 0; margin: 0; }
 .case-row { padding: 10px 12px; border-radius: 8px; cursor: pointer; }
 .case-row:hover { background: var(--panel-2); }
@@ -298,6 +394,45 @@
   margin-right: 8px;
 }
 .agent-rules { margin-top: 8px; }
+
+/* Per-stage verification checks (✓ / ✗) */
+.agent-checks {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.agent-check {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  line-height: 1.25;
+  color: var(--text);
+}
+.agent-check-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.agent-check-passed .agent-check-icon {
+  background: rgba(34, 197, 94, 0.16);
+  color: var(--ok, #4ade80);
+}
+.agent-check-failed .agent-check-icon {
+  background: rgba(245, 158, 11, 0.16);
+  color: var(--warn, #fbbf24);
+}
+.agent-check-failed .agent-check-label {
+  color: var(--warn, #fbbf24);
+  font-weight: 600;
+}
 .trace-item { margin-bottom: 12px; }
 .trace-header { margin-bottom: 4px; }
 .rule-list { list-style: none; padding-left: 0; margin: 4px 0; }

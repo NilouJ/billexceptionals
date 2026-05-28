@@ -8,12 +8,23 @@ function summarise(runs) {
   return { processed, workable, unworkable };
 }
 
-export default function BatchDashboard({ batchSize = 0, runs = {}, onReset }) {
+export default function BatchDashboard({
+  batchSize = 0,
+  runs = {},
+  onReset,
+  batchStatus = "idle",
+  batchProgress = { done: 0, total: 0 },
+}) {
   const [open, setOpen] = useState(true);
   const { processed, workable, unworkable } = useMemo(() => summarise(runs), [runs]);
 
   const remaining = Math.max(0, batchSize - processed);
   const pct = batchSize > 0 ? Math.round((processed / batchSize) * 100) : 0;
+  const isBatching = batchStatus === "running";
+  const indeterminate = isBatching && batchProgress.total === 0;
+  const batchPct = batchProgress.total > 0
+    ? Math.round((batchProgress.done / batchProgress.total) * 100)
+    : 0;
 
   const handleReset = () => {
     if (processed === 0) {
@@ -35,8 +46,11 @@ export default function BatchDashboard({ batchSize = 0, runs = {}, onReset }) {
       >
         <span className="batch-dashboard-chevron">{open ? "▾" : "▸"}</span>
         <span className="batch-dashboard-title">Batch overview</span>
+        {isBatching && <span className="batch-live-dot" aria-hidden="true" />}
         <span className="batch-dashboard-summary">
-          {processed} / {batchSize} processed · {pct}%
+          {isBatching
+            ? `${batchProgress.done} / ${batchProgress.total || "…"} screening…`
+            : `${processed} / ${batchSize} processed · ${pct}%`}
         </span>
       </button>
 
@@ -53,11 +67,23 @@ export default function BatchDashboard({ batchSize = 0, runs = {}, onReset }) {
             type="button"
             className="batch-reset"
             onClick={handleReset}
-            disabled={processed === 0}
+            disabled={processed === 0 || isBatching}
             title="Clear processed counters (demo only)"
           >
             Reset demo
           </button>
+        </div>
+      )}
+
+      {open && isBatching && (
+        <div
+          className={`batch-progress${indeterminate ? " batch-progress-indeterminate" : ""}`}
+          aria-label={indeterminate ? "Starting batch" : `Batch progress ${batchPct}%`}
+        >
+          <div
+            className="batch-progress-bar"
+            style={indeterminate ? undefined : { width: `${batchPct}%` }}
+          />
         </div>
       )}
     </section>
