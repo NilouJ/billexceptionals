@@ -234,6 +234,17 @@ class LLMOutcomeNode(MultiAgentBase):
             if next_action:
                 trace_reasons.append(f"Next action: {next_action}")
 
+            ctx = state["context"]
+            outcome_checks = [
+                {"rule_id": "S1", "label": "Triage cleared",       "passed": not ctx.get("triage_excluded"),
+                 **({"reason": "Excluded at triage."}             if ctx.get("triage_excluded")     else {})},
+                {"rule_id": "S2", "label": "Pre-check cleared",    "passed": not ctx.get("precheck_blocked"),
+                 **({"reason": "Blocked at pre-check."}           if ctx.get("precheck_blocked")    else {})},
+                {"rule_id": "S3", "label": "Ground-rule cleared",  "passed": not ctx.get("groundrule_unworkable"),
+                 **({"reason": "Unworkable at ground-rule."}      if ctx.get("groundrule_unworkable") else {})},
+                {"rule_id": "S4", "label": "SOP context resolved", "passed": not ctx.get("sop_gap"),
+                 **({"reason": "No SOP for classified scenario."} if ctx.get("sop_gap")             else {})},
+            ]
             _trace(
                 state,
                 self.id,
@@ -247,6 +258,7 @@ class LLMOutcomeNode(MultiAgentBase):
                     "next_action":          next_action,
                     "raw_reason_codes":     reason_codes,
                 },
+                checks=outcome_checks,
             )
             status = Status.COMPLETED
 

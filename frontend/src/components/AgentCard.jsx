@@ -48,7 +48,28 @@ export default function AgentCard({ agent, index }) {
       <div className="agent-status">{agent.status}</div>
       {agent.decision && <div className="agent-decision">{agent.decision}</div>}
 
-      {agent.rule_hits?.length > 0 && (
+      {agent.checks?.length > 0 && (
+        <ul className="agent-checks">
+          {agent.checks.map((c, i) => (
+            <li
+              key={i}
+              className={`agent-check ${c.passed ? "agent-check-passed" : "agent-check-failed"}`}
+              title={c.reason || c.label}
+            >
+              <span className="agent-check-icon" aria-hidden="true">
+                {c.passed ? (
+                  <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 8 7 12 13 4"/></svg>
+                ) : (
+                  <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="4" y1="4" x2="12" y2="12"/><line x1="12" y1="4" x2="4" y2="12"/></svg>
+                )}
+              </span>
+              <span className="agent-check-label">{c.label}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {agent.checks?.length === 0 && agent.rule_hits?.length > 0 && (
         <div className="agent-rules">
           {agent.rule_hits.map((h, i) => (
             <span key={i} className="rule-chip rule-chip-sm" title={h.reason}>{h.rule_id}</span>
@@ -56,7 +77,7 @@ export default function AgentCard({ agent, index }) {
         </div>
       )}
 
-      {agent.rule_hits?.length === 0 && agent.reasons?.length > 0 && (
+      {agent.checks?.length === 0 && agent.rule_hits?.length === 0 && agent.reasons?.length > 0 && (
         <ul className="agent-reasons">
           {agent.reasons.slice(0, 4).map((r, i) => <li key={i}>{r}</li>)}
         </ul>

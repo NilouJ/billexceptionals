@@ -23,9 +23,33 @@ def _read(filename):
         return list(csv.DictReader(f))
 
 
-def get_cases_list():
-    """Return all 100 exception cases for the /cases endpoint."""
+def get_all_cases():
+    """Return every exception case as a flat list — used by the batch screening endpoint."""
     return _read("origin_exceptions.csv")
+
+
+def get_cases_list(page: int = 1, page_size: int = 20, search: str = ""):
+    """Return a paginated slice of exception cases for the /cases endpoint."""
+    rows = _read("origin_exceptions.csv")
+    if search:
+        q = search.strip().lower()
+        rows = [
+            r for r in rows
+            if q in (r.get("exception_id") or "").lower()
+            or q in (r.get("account_number") or "").lower()
+            or q in (r.get("exception_type") or "").lower()
+        ]
+    total = len(rows)
+    pages = max(1, (total + page_size - 1) // page_size)
+    page = max(1, min(page, pages))
+    start = (page - 1) * page_size
+    return {
+        "items": rows[start : start + page_size],
+        "total": total,
+        "page": page,
+        "page_size": page_size,
+        "pages": pages,
+    }
 
 
 def get_account(account_number):

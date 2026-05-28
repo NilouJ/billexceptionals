@@ -18,6 +18,21 @@ export function openScreeningSocket({ onEvent, onClose, onError } = {}) {
 }
 
 
+export function openBatchSocket({ onEvent, onClose, onError } = {}) {
+  const proto = window.location.protocol === "https:" ? "wss" : "ws";
+  const ws = new WebSocket(`${proto}://${window.location.host}/ws/screen/batch`);
+
+  ws.onmessage = (e) => {
+    try { onEvent?.(JSON.parse(e.data)); }
+    catch (err) { onError?.(err); }
+  };
+  ws.onclose = (e) => onClose?.(e);
+  ws.onerror = (e) => onError?.(e);
+
+  return { ws, close: () => ws.close() };
+}
+
+
 export function openChatSocket({ onEvent, onClose, onError } = {}) {
   const proto = window.location.protocol === "https:" ? "wss" : "ws";
   const ws = new WebSocket(`${proto}://${window.location.host}/ws/chat`);
