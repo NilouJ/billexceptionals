@@ -110,7 +110,6 @@ See [`HACKATHON.md`](HACKATHON.md) for the Thursday-Friday work plan, role split
 
 | Topic | Owner |
 |---|---|
-| Functional design / proposal context | Rafael de Souza — Data and AI Lead |
 | Backend + Strands graph | Squad backend lead |
 | Frontend + UI state | Squad frontend lead |
 | Bedrock / Azure provisioning | Squad infra lead |
