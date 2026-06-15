@@ -25,3 +25,4 @@ frontend/dist/
 # IDE / OS
 .vscode/
 *.swp
+.claude/
