@@ -26,3 +26,6 @@ frontend/dist/
 .vscode/
 *.swp
 .claude/
+
+.claude/
+CLAUDE.md
