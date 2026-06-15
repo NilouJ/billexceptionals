@@ -11,7 +11,7 @@ def agent_running_event(case_id: str, agent_key: str) -> dict:
     }
 
 
-def agent_done_event(case_id: str, agent_key: str, decision: str, reasons: list, rule_hits: list, evidence: dict | None = None) -> dict:
+def agent_done_event(case_id: str, agent_key: str, decision: str, reasons: list, rule_hits: list, evidence: dict | None = None, checks: list | None = None) -> dict:
     return {
         "type":      "agent_status",
         "case_id":   case_id,
@@ -22,6 +22,7 @@ def agent_done_event(case_id: str, agent_key: str, decision: str, reasons: list,
         "reasons":   reasons,
         "rule_hits": rule_hits,
         "evidence":  evidence or {},
+        "checks":    checks or [],
     }
 
 

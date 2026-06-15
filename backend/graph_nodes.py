@@ -24,7 +24,7 @@ import time
 from strands import Agent
 from strands.multiagent.base import MultiAgentBase, MultiAgentResult, NodeResult, Status
 
-from agents import _trace, case_screening_outcome_agent
+from agents import _trace, assemble_case_pack, case_screening_outcome_agent
 from model_provider import get_outcome_model, provider_model_id, provider_source_tag
 from schemas import AGENT_LABELS
 
@@ -223,6 +223,7 @@ class LLMOutcomeNode(MultiAgentBase):
                 "rationale":      rationale,
                 "next_action":    next_action,
                 "summary":        summary,
+                "case_pack":      assemble_case_pack(state, recommendation, summary),
             }
             trace_reasons = []
             if summary:
@@ -233,6 +234,17 @@ class LLMOutcomeNode(MultiAgentBase):
             if next_action:
                 trace_reasons.append(f"Next action: {next_action}")
 
+            ctx = state["context"]
+            outcome_checks = [
+                {"rule_id": "S1", "label": "Triage cleared",       "passed": not ctx.get("triage_excluded"),
+                 **({"reason": "Excluded at triage."}             if ctx.get("triage_excluded")     else {})},
+                {"rule_id": "S2", "label": "Pre-check cleared",    "passed": not ctx.get("precheck_blocked"),
+                 **({"reason": "Blocked at pre-check."}           if ctx.get("precheck_blocked")    else {})},
+                {"rule_id": "S3", "label": "Ground-rule cleared",  "passed": not ctx.get("groundrule_unworkable"),
+                 **({"reason": "Unworkable at ground-rule."}      if ctx.get("groundrule_unworkable") else {})},
+                {"rule_id": "S4", "label": "SOP context resolved", "passed": not ctx.get("sop_gap"),
+                 **({"reason": "No SOP for classified scenario."} if ctx.get("sop_gap")             else {})},
+            ]
             _trace(
                 state,
                 self.id,
@@ -246,6 +258,7 @@ class LLMOutcomeNode(MultiAgentBase):
                     "next_action":          next_action,
                     "raw_reason_codes":     reason_codes,
                 },
+                checks=outcome_checks,
             )
             status = Status.COMPLETED
 

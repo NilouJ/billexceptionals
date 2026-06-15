@@ -61,6 +61,7 @@ async def run_screening_graph(case: dict, send_event=None) -> dict:
                     reasons=latest.get("reasons", []),
                     rule_hits=latest.get("rule_hits", []),
                     evidence=latest.get("evidence", {}),
+                    checks=latest.get("checks", []),
                 ))
 
     if send_event:

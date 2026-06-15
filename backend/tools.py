@@ -23,9 +23,33 @@ def _read(filename):
         return list(csv.DictReader(f))
 
 
-def get_cases_list():
-    """Return all 100 exception cases for the /cases endpoint."""
+def get_all_cases():
+    """Return every exception case as a flat list — used by the batch screening endpoint."""
     return _read("origin_exceptions.csv")
+
+
+def get_cases_list(page: int = 1, page_size: int = 20, search: str = ""):
+    """Return a paginated slice of exception cases for the /cases endpoint."""
+    rows = _read("origin_exceptions.csv")
+    if search:
+        q = search.strip().lower()
+        rows = [
+            r for r in rows
+            if q in (r.get("exception_id") or "").lower()
+            or q in (r.get("account_number") or "").lower()
+            or q in (r.get("exception_type") or "").lower()
+        ]
+    total = len(rows)
+    pages = max(1, (total + page_size - 1) // page_size)
+    page = max(1, min(page, pages))
+    start = (page - 1) * page_size
+    return {
+        "items": rows[start : start + page_size],
+        "total": total,
+        "page": page,
+        "page_size": page_size,
+        "pages": pages,
+    }
 
 
 def get_account(account_number):
@@ -182,6 +206,29 @@ def get_service_orders(account_number):
         }
         for p in all_lc.get(account_number, [])
         if p.get("status") in ("PENDING", "IN_PROGRESS")
+    ]
+
+
+def get_pmd_requests(account_number):
+    """
+    Return active PMD (Provide Meter Data) requests for the account.
+    Drives R03-07 (PMD already raised) and R03-08 (PMD for Rate Tariff Issue)
+    — see proposal §2.3 GR-01 / GR-02 / GR-04.
+    """
+    try:
+        rows = _read("kraken_pmd_requests.csv")
+    except FileNotFoundError:
+        return []
+    return [
+        {
+            "pmd_id":      p.get("pmd_id"),
+            "type":        p.get("type"),
+            "status":      p.get("status"),
+            "raised_date": p.get("raised_date"),
+        }
+        for p in rows
+        if p.get("account_number") == account_number
+        and p.get("status") in ("PENDING", "IN_PROGRESS")
     ]
 
 
